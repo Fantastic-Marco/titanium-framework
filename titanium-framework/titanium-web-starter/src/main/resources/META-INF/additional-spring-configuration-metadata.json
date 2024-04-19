@@ -1,0 +1,10 @@
+{"groups": [
+
+],"properties": [
+  {
+    "name": "web.config.enable-api-logging",
+    "type": "java.lang.Boolean",
+    "description": "Enable API Logging To Print Request and Response Info",
+    "defaultValue": "false"
+  }
+]}

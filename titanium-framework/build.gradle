@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.titanium'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java' // 如果所有子项目都使用 Java 插件
+
+    java {
+        sourceCompatibility = '17'
+    }
+
+    configurations {
+        implementationClasspath {
+            // 这里可以添加对 implementation 配置的额外配置，如果需要的话
+        }
+    }
+
+    dependencies {
+        // 其他共享依赖
+        implementation 'org.projectlombok:lombok:1.18.30' // Lombok 库，同时用于编译和运行时
+
+    }
+}
