@@ -1,0 +1,11 @@
+// dependency-management.gradle
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+//    dependencies {
+//        create("titanium-platform") {
+//            from(projects.selectedProject("titanium-dependencies"))
+//        }
+//    }
+}
