@@ -1,6 +1,7 @@
 plugins {
     id 'maven-publish'
     id 'java'
+    id 'java-library'
 }
 
 group = 'com.titanium'
@@ -9,11 +10,10 @@ version = '0.0.1-SNAPSHOT'
 
 
 dependencies {
+    api project(':titanium-common')
+    api project(':titanium-util')
     compileOnly 'org.springframework.boot:spring-boot-starter-web:3.2.5'
     compileOnly 'org.springframework.boot:spring-boot-starter:3.2.5'
-    // 其他共享依赖
-    implementation 'org.projectlombok:lombok:1.18.30' // Lombok 库，同时用于编译和运行时
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
     //jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.0'
