@@ -1,10 +1,18 @@
-{"groups": [
-
-],"properties": [
-  {
-    "name": "titanium.json.enableApiLogging",
-    "type": "java.lang.Boolean",
-    "description": "Enable API Logging To Print Request and Response Info",
-    "defaultValue": "false"
-  }
-]}
+{
+  "groups": [
+  ],
+  "properties": [
+    {
+      "name": "titanium.json.timezone",
+      "type": "java.lang.String",
+      "description": "Time-Zone",
+      "defaultValue": "Asia/Shanghai"
+    },
+    {
+      "name": "titanium.json.numberToString",
+      "type": "java.lang.Boolean",
+      "description": "make number response string",
+      "defaultValue": true
+    }
+  ]
+}

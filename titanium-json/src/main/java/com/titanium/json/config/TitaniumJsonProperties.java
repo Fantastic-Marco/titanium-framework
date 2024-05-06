@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +19,5 @@ public class TitaniumJsonProperties {
     /**
      * 数字转字符串
      */
-    private Boolean numberToString = true;
+    private Boolean longToString = true;
 }

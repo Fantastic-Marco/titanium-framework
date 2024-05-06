@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'com.titanium'
@@ -29,10 +30,42 @@ subprojects {
         maven { url 'https://maven.aliyun.com/repository/public/' }
     }
 
+    // 打包sourcesJar任务
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        archiveClassifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    // 打包javadocJar任务
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        // 或者只关闭特定的检查，例如关闭return检查：
+        // options.addStringOption('Xdoclint:-missing', '-quiet')
+    }
+
+    // 解决javadoc打包乱码
+    javadoc {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            author true
+            version true
+            title "文档大标题"
+        }
+    }
+
     publishing {
         publications {
             maven(MavenPublication) {
                 from components.java
+                // 增加 sourcesJar、javadocJar 任务
+                artifact sourcesJar
+                artifact javadocJar
             }
         }
 

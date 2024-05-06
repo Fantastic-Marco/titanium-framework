@@ -4,19 +4,20 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.titanium.json.handler.TitaniumJacksonAnnotationIntrospector;
-import com.titanium.json.handler.TitaniumJsonAnnotationHandler;
 import com.titanium.json.module.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-@Configuration
+@Slf4j
+@AutoConfiguration
 @EnableConfigurationProperties(TitaniumJsonProperties.class)
 public class TitaniumJsonConfiguration {
 
@@ -26,7 +27,7 @@ public class TitaniumJsonConfiguration {
      * @return
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer customizer(TitaniumJsonProperties properties, List<TitaniumJsonAnnotationHandler> handlers) {
+    public Jackson2ObjectMapperBuilderCustomizer titaniumCustomizer(TitaniumJsonProperties properties) {
         return builder -> {
             builder.locale(Locale.CHINA);
             builder.timeZone(TimeZone.getTimeZone(properties.getTimezone()));
@@ -38,7 +39,8 @@ public class TitaniumJsonConfiguration {
             // 空字符串处理
             builder.featuresToEnable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
             // 注解拦截器
-            builder.annotationIntrospector(fn -> new TitaniumJacksonAnnotationIntrospector(handlers));
+            builder.annotationIntrospector(fn -> new TitaniumJacksonAnnotationIntrospector());
+            log.info("added customer jackson annotation handler");
             // BoosterModule
             builder.modulesToInstall(getModules(properties));
         };
@@ -53,7 +55,7 @@ public class TitaniumJsonConfiguration {
     private Module[] getModules(TitaniumJsonProperties properties) {
         final var modules = new ArrayList<Module>();
         modules.add(new TitaniumDateTimeModule());
-        if (properties.getNumberToString()) {
+        if (properties.getLongToString()) {
             modules.add(new TitaniumLongModule());
         } else {
             modules.add(new TitaniumNumberModule());

@@ -2,6 +2,7 @@ package com.titanium.json.sensitive;
 
 import com.titanium.common.annotation.Sensitive;
 import com.titanium.json.handler.TitaniumJsonAnnotationHandler;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 

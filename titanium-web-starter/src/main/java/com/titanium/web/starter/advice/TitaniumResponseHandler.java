@@ -1,8 +1,12 @@
 package com.titanium.web.starter.advice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.titanium.web.starter.protocol.Response;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -14,12 +18,14 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 
-@ControllerAdvice
-@Order(1)
-public class TitaniumResponseHandler extends MappingJackson2HttpMessageConverter implements Ordered {
 
-    public TitaniumResponseHandler() {
+@Slf4j
+@ControllerAdvice
+public class TitaniumResponseHandler extends MappingJackson2HttpMessageConverter implements InitializingBean {
+
+    public TitaniumResponseHandler(ObjectMapper objectMapper) {
         super();
+        setObjectMapper(objectMapper);
         // 设置支持的媒体类型，例如 application/json
         super.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
     }
@@ -45,7 +51,7 @@ public class TitaniumResponseHandler extends MappingJackson2HttpMessageConverter
     }
 
     @Override
-    public int getOrder() {
-        return 1;
+    public void afterPropertiesSet() throws Exception {
+        log.info("added global response handler");
     }
 }
