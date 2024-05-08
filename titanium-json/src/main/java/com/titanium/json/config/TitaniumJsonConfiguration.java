@@ -38,8 +38,8 @@ public class TitaniumJsonConfiguration {
             builder.featuresToDisable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS);
             // 空字符串处理
             builder.featuresToEnable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-            // 注解拦截器
-            builder.annotationIntrospector(fn -> new TitaniumJacksonAnnotationIntrospector());
+            //TODO 失效 注解拦截器
+            builder.annotationIntrospector(new TitaniumJacksonAnnotationIntrospector());
             log.info("added customer jackson annotation handler");
             // BoosterModule
             builder.modulesToInstall(getModules(properties));

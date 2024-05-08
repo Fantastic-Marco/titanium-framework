@@ -10,6 +10,7 @@ repositories {
     mavenCentral()
 }
 
+
 allprojects {
     repositories {
         mavenCentral()
@@ -17,6 +18,22 @@ allprojects {
 }
 
 subprojects {
+    buildscript {
+        ext {
+            springBootVersion = '3.2.5'
+            fluentMybatisVersion = '1.9.2'
+            lombokVersion = '1.18.30'
+            hutoolVersion = '5.8.20'
+            mysqlConnectorVersion = '8.0.28'
+            jacksonVersion = '2.16.0'
+            hikariCpVersion = '5.1.0'
+            aptVersion = '0.21'
+        }
+    }
+
+    group = 'com.titanium'
+    version = '0.0.1-SNAPSHOT'
+
     // 设置最低支持的 JDK 版本
     java.sourceCompatibility = JavaVersion.VERSION_17
     java.targetCompatibility = JavaVersion.VERSION_17
@@ -82,13 +99,14 @@ subprojects {
         dependsOn tasks.build
         dependsOn tasks.publish
         dependsOn tasks.publishMavenPublicationToMavenLocal
+        print(model.getName() + " :publishToLocal: " + System.getProperty('user.home') + '/.m2/repository\n')
     }
 
     publishToLocal.description = 'Publish to local maven repository'
 
     dependencies {
-        implementation 'org.projectlombok:lombok:1.18.30' // Lombok 库，同时用于编译和运行时
-        annotationProcessor 'org.projectlombok:lombok:1.18.30'
-        implementation 'cn.hutool:hutool-all:5.8.11'
+        implementation "org.projectlombok:lombok:${lombokVersion}" // Lombok 库，同时用于编译和运行时
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        implementation "cn.hutool:hutool-all:${hutoolVersion}"
     }
 }

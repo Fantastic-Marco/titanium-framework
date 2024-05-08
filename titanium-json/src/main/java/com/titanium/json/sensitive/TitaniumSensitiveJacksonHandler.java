@@ -23,6 +23,6 @@ public class TitaniumSensitiveJacksonHandler implements TitaniumJsonAnnotationHa
      */
     @Override
     public Object serializer() {
-        return null;
+        return new TitaniumSensitiveSerializer();
     }
 }

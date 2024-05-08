@@ -1,13 +1,19 @@
 package com.titanium.json.handler;
 
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
 @Slf4j
-public class TitaniumJacksonAnnotationIntrospector extends JacksonAnnotationIntrospector {
+public class TitaniumJacksonAnnotationIntrospector extends AnnotationIntrospector {
+
+    @Override
+    public Version version() {
+        return Version.unknownVersion();
+    }
 
     /**
      * 通过注解返回自定义注解序列化器

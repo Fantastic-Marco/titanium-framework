@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'eclipse'
+}
+
+dependencies {
+    api("com.github.atool:fluent-mybatis:${fluentMybatisVersion}") {
+        // 排除mybatis-spring模块
+        exclude group: 'org.mybatis',module: 'mybatis-spring'
+    }
+    api "com.github.atool:fluent-mybatis-processor:${fluentMybatisVersion}"
+    annotationProcessor "com.github.atool:fluent-mybatis-processor:${fluentMybatisVersion}"
+    compileOnly "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    compileOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    api "com.zaxxer:HikariCP:${hikariCpVersion}"
+    api "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+    //需要升级到3.0.3，因为fluent-mybatis 1.9.20 和 spring boot 3.2.5存在兼容问题
+    api "org.mybatis:mybatis-spring:3.0.3"
+}
+
+

@@ -10,11 +10,11 @@ version = '0.0.1-SNAPSHOT'
 
 dependencies {
     api project(":titanium-json")
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
-    implementation 'org.springframework.boot:spring-boot-starter:3.2.5'
+    api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     // 其他共享依赖
-    implementation 'org.projectlombok:lombok:1.18.30' // Lombok 库，同时用于编译和运行时
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    api "org.projectlombok:lombok:${lombokVersion}" // Lombok 库，同时用于编译和运行时
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
 }
 

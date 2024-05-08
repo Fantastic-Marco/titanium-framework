@@ -14,7 +14,7 @@ public class TitaniumNumberModule extends SimpleModule {
      * 指定序列化规则
      */
     public TitaniumNumberModule() {
-        super("BoosterNumberModule");
+        super("TitaniumNumberModule");
         //======================= 数字类型序列化成string ===========================
         this.addSerializer(Byte.class, TitaniumToStringSerializer.instance);
         this.addSerializer(byte.class, TitaniumToStringSerializer.instance);

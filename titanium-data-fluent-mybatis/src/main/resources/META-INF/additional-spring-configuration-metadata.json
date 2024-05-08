@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "sourceType": "com.titanium.data.fluent.mybatis.config.TitaniumFluentMybatisProperties",
+      "name": "titanium-data-fluent-mybatis",
+      "type": "com.titanium.data.fluent.mybatis.config.TitaniumFluentMybatisProperties"
+    }
+  ],
+  "properties": [
+    {
+      "defaultValue": false,
+      "name": "titanium.fluent.mybatis.base-package",
+      "description": "set your mapper base package",
+      "type": "java.lang.String"
+    }
+  ]
+}
