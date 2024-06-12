@@ -3,11 +3,13 @@ package com.titanium.json.handler;
 import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.titanium.json.sensitive.TitaniumSensitiveJacksonHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
+@Slf4j
 public class TitaniumJacksonAnnotationHandlerManager {
     private static List<TitaniumJsonAnnotationHandler> handlers = new ArrayList<>();
 
@@ -15,6 +17,7 @@ public class TitaniumJacksonAnnotationHandlerManager {
         // spi加载自定义注解处理器
         ServiceLoader<TitaniumJsonAnnotationHandler> loader = ServiceLoader.load(TitaniumJsonAnnotationHandler.class);
         for (TitaniumJsonAnnotationHandler handler : loader) {
+            log.info("TitaniumJsonAnnotationHandler ——> " + handler.getClass().getSimpleName());
             handlers.add(handler);
         }
         handlers.add(new TitaniumSensitiveJacksonHandler());

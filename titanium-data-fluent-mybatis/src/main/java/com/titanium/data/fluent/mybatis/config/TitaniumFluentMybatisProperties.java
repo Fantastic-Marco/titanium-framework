@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "titanium.fluent.mybatis")
+@ConfigurationProperties(prefix = "titanium.data.fluent.mybatis")
 public class TitaniumFluentMybatisProperties {
     private String basePackage;
     private String mapperLocations;
