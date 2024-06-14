@@ -1,10 +1,16 @@
-{"groups": [
-
-],"properties": [
-  {
-    "name": "titanium.web.enableApiLogging",
-    "type": "java.lang.Boolean",
-    "description": "Enable API Logging To Print Request and Response Info",
-    "defaultValue": "false"
-  }
-]}
+{
+  "groups": [
+    {
+      "name": "web",
+      "description": "web application"
+    }
+  ],
+  "properties": [
+    {
+      "name": "titanium.web.enableApiLogging",
+      "type": "java.lang.Boolean",
+      "description": "Enable API Logging To Print Request and Response Info",
+      "defaultValue": false
+    }
+  ]
+}

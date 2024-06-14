@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "name": "user",
+      "description": "user authorization."
+    }
+  ],
+  "properties": [
+    {
+      "name": "titanium.user.enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off user authorization.",
+      "defaultValue": true
+    }
+  ]
+}
