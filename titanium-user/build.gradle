@@ -3,7 +3,7 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-starter-web:3.2.5'
     compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
 
-    implementation "com.titanium:titanium-common:$version"
+    api project(':titanium-common')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

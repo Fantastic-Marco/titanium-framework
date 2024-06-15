@@ -18,8 +18,6 @@ import java.util.Optional;
  * 会往请求中尽可能地放置用户信息以及请求头
  */
 @Slf4j
-@AllArgsConstructor
-@NoArgsConstructor
 public class TitaniumUserRequestInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
