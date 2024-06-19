@@ -4,15 +4,16 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.apache.ibatis.type.JdbcType;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("serial")
-@SuperBuilder(toBuilder = true)
 public class NamedBaseEntity extends BaseEntity {
 
     /**
