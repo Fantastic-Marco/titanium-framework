@@ -10,18 +10,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @AutoConfiguration
 @EnableConfigurationProperties(TitaniumUserProperties.class)
 public class TitaniumUserConfiguration {
-
-    @Bean
-    @ConditionalOnProperty(prefix = "titanium.user", name = "enabled")
-    public OncePerRequestFilter userRequestFilter() {
-        return new TitaniumUserRequestFilter();
-    }
 
     @Bean
     @ConditionalOnProperty(prefix = "titanium.user", name = "enabled")

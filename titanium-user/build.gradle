@@ -1,13 +1,15 @@
 dependencies {
-    compileOnly 'org.springframework.boot:spring-boot-starter:3.2.5'
-    compileOnly 'org.springframework.boot:spring-boot-starter-web:3.2.5'
+    compileOnly "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    compileOnly "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+    compileOnly "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 
     api project(':titanium-common')
+    api project(':titanium-util')
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // 其他共享依赖
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
