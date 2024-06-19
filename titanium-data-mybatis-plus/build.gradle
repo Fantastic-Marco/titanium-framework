@@ -1,11 +1,19 @@
 dependencies {
+    api project(":titanium-common")
+    api project(":titanium-user")
+
     api "com.baomidou:mybatis-plus:${mybatisPlusVersion}"
+    //需要升级到3.0.3，因为fluent-mybatis 1.9.20 和 spring boot 3.2.5存在兼容问题
+    api "org.mybatis:mybatis-spring:3.0.3"
+    implementation 'p6spy:p6spy:3.9.1'
+
     compileOnly "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compileOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     api "com.zaxxer:HikariCP:${hikariCpVersion}"
     api "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
-    //需要升级到3.0.3，因为fluent-mybatis 1.9.20 和 spring boot 3.2.5存在兼容问题
-    api "org.mybatis:mybatis-spring:3.0.3"
+
+
 }

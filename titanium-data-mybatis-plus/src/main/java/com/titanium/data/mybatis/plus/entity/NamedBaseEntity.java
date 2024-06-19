@@ -1,0 +1,30 @@
+package com.titanium.data.mybatis.plus.entity;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.apache.ibatis.type.JdbcType;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuppressWarnings("serial")
+@SuperBuilder(toBuilder = true)
+public class NamedBaseEntity extends BaseEntity {
+
+    /**
+     * 创建人名称
+     */
+    @TableField(value = "creator_name", jdbcType = JdbcType.VARCHAR, fill = FieldFill.INSERT)
+    private String creatorName;
+
+    /**
+     * 修改人名称
+     */
+    @TableField(value = "reviser_name", jdbcType = JdbcType.VARCHAR, fill = FieldFill.UPDATE)
+    private String reviserName;
+
+}

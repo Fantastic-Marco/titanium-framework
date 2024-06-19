@@ -1,5 +1,6 @@
 package com.titanium.data.mybatis.plus.config;
 
+import com.titanium.data.mybatis.plus.repository.AdvancedSqlInjector;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -35,5 +36,10 @@ public class TitaniumMybatisPlusConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
+    }
+
+    @Bean
+    public AdvancedSqlInjector advancedSqlInjector() {
+        return new AdvancedSqlInjector();
     }
 }
