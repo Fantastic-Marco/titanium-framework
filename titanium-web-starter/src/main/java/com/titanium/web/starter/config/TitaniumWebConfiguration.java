@@ -2,7 +2,7 @@ package com.titanium.web.starter.config;
 
 import com.titanium.json.config.TitaniumJsonConfiguration;
 import com.titanium.web.starter.advice.ApiLogHandler;
-import com.titanium.web.starter.advice.TitaniumResponseHandler;
+import com.titanium.web.starter.advice.TitaniumMessageConverter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -23,12 +23,12 @@ import java.util.List;
 @EnableConfigurationProperties(TitaniumWebProperties.class)
 @AutoConfigureAfter(TitaniumJsonConfiguration.class)
 @ConditionalOnWebApplication
-@Import(TitaniumResponseHandler.class)
+@Import(TitaniumMessageConverter.class)
 public class TitaniumWebConfiguration implements WebMvcConfigurer {
     @Resource
     private TitaniumWebProperties titaniumWebProperties;
     @Resource
-    private TitaniumResponseHandler titaniumResponseHandler;
+    private TitaniumMessageConverter titaniumMessageConverter;
 
     @Bean
     public ApiLogHandler apiLogHandler() {
@@ -45,7 +45,7 @@ public class TitaniumWebConfiguration implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         List<HttpMessageConverter<?>> newConverters = new ArrayList<>();
         //设置为最高优先级
-        newConverters.add(0,titaniumResponseHandler);
+        newConverters.add(0, titaniumMessageConverter);
         newConverters.addAll(converters);
         converters.clear();
         converters.addAll(newConverters);

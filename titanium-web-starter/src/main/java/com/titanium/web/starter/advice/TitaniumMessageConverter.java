@@ -1,12 +1,10 @@
 package com.titanium.web.starter.advice;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.titanium.web.starter.protocol.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -21,9 +19,9 @@ import java.util.Collections;
 
 @Slf4j
 @ControllerAdvice
-public class TitaniumResponseHandler extends MappingJackson2HttpMessageConverter implements InitializingBean {
+public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverter implements InitializingBean {
 
-    public TitaniumResponseHandler(ObjectMapper objectMapper) {
+    public TitaniumMessageConverter(ObjectMapper objectMapper) {
         super();
         setObjectMapper(objectMapper);
         // 设置支持的媒体类型，例如 application/json
@@ -32,7 +30,7 @@ public class TitaniumResponseHandler extends MappingJackson2HttpMessageConverter
 
     @Override
     protected boolean canWrite(MediaType mediaType) {
-        return true;
+        return ObjectUtil.isNotNull(mediaType) && mediaType.isCompatibleWith(MediaType.APPLICATION_JSON);
     }
 
     @Override

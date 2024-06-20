@@ -1,8 +1,6 @@
 dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter:$springBootVersion"
     compileOnly "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
-    compileOnly "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 
     api project(':titanium-common')
     api project(':titanium-util')

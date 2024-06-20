@@ -1,12 +1,10 @@
-package com.titanium.user.interceptor;
+package com.titanium.feign.interceptor;
 
 import com.titanium.user.context.UserContext;
 import com.titanium.user.context.UserContextHolder;
 import feign.Request;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.titanium.common.constant.WebHeaderConstants;
 
@@ -27,7 +25,6 @@ public class TitaniumUserRequestInterceptor implements RequestInterceptor {
         putHeader(requestTemplate, WebHeaderConstants.USER_NAME, userContext.getUserName());
         putHeader(requestTemplate, WebHeaderConstants.TENANT_ID, userContext.getTenantId());
         putHeader(requestTemplate, WebHeaderConstants.TENANT_USER_ID, userContext.getTenantUserId());
-        putHeader(requestTemplate, WebHeaderConstants.TENANT_USER_NAME, userContext.getTenantUserName());
         putHeader(requestTemplate, WebHeaderConstants.SYSTEM_CODE, userContext.getSystemCode());
         putHeader(requestTemplate, WebHeaderConstants.AUTHORIZATION, userContext.getAuthorization());
     }

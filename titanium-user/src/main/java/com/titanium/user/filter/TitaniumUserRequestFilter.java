@@ -1,8 +1,8 @@
 package com.titanium.user.filter;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.titanium.user.context.UserContext;
+import com.titanium.user.context.UserContextHolder;
 import com.titanium.util.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,11 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -26,11 +22,8 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-@ConditionalOnProperty(prefix = "titanium.user", name = "enabled")
-@ConditionalOnClass(SecurityContextHolder.class)
+@ConditionalOnProperty(prefix = "titanium.user", name = "enabled",havingValue = "true")
 public class TitaniumUserRequestFilter extends OncePerRequestFilter {
-    @Autowired
-    private SecurityContextHolder securityContextHolder;
 
     /**
      * Same contract as for {@code doFilter}, but guaranteed to be
@@ -46,10 +39,16 @@ public class TitaniumUserRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //校验JWT，成功则放置令牌
         try {
-            Jws<Claims> claimsJws = JwtUtil.decodeJwt(request.getHeader("Authorization").toString(), JwtUtil.SECRET_KEY);
+            String authorization = request.getHeader("Authorization");
+            if (authorization == null) {
+                // 未登录,往下一个过滤器
+                filterChain.doFilter(request, response);
+            }
+            Jws<Claims> claimsJws = JwtUtil.decodeJwt(authorization.toString(), JwtUtil.SECRET_KEY);
             String subject = claimsJws.getPayload().getSubject();
             UserContext userContext = JSONUtil.toBean(subject, UserContext.class);
-
+            UserContextHolder.set(userContext);
+            filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             throw new RuntimeException("token已过期");
         } catch (SignatureException e) {

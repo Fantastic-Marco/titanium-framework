@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,16 +26,6 @@ public class UserContext {
     private String userName;
 
     /**
-     * 手机号码
-     */
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String email;
-
-    /**
      * 租户Id
      */
     private Long tenantId;
@@ -49,19 +41,13 @@ public class UserContext {
     private String systemCode;
 
     /**
-     * 租户code
-     */
-    private String tenantCode;
-
-    /**
      * 租户用户Id
      */
     private Long tenantUserId;
 
     /**
-     * 租户用户名称
+     * 角色名
      */
-    private String tenantUserName;
-
+    private List<String> authorities;
 
 }

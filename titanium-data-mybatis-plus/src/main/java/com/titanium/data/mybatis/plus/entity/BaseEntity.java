@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.JdbcType;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class BaseEntity{
      * 创建时间
      */
     @TableField(value = "created_time", jdbcType = JdbcType.TIME, fill = FieldFill.INSERT)
-    private Long createdTime;
+    private LocalDateTime createdTime;
 
     /**
      * 更新人Id
@@ -34,7 +36,7 @@ public class BaseEntity{
      * 更新时间
      */
     @TableField(value = "revised_time", jdbcType = JdbcType.TIME, fill = FieldFill.UPDATE)
-    private Long revisedTime;
+    private LocalDateTime revisedTime;
 
     /**
      * 是否删除 0-未删除，1-已删除

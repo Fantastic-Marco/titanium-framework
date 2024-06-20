@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  * 字段填充器
  */
 @Slf4j
-@Component
 public class TitaniumMetaObjectHandler implements MetaObjectHandler {
     /**
      * 插入填充
