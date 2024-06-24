@@ -3,11 +3,10 @@ package com.titanium.data.mybatis.plus.autofill;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.titanium.common.enums.Bool;
-import com.titanium.user.context.UserContext;
-import com.titanium.user.context.UserContextHolder;
+import com.titanium.common.user.UserContext;
+import com.titanium.common.user.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 

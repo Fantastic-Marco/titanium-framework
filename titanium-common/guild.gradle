@@ -1,9 +1,0 @@
-plugins {
-    id 'java-library'
-    id 'idea'
-    id 'eclipse'
-}
-
-dependencies {
-
-}

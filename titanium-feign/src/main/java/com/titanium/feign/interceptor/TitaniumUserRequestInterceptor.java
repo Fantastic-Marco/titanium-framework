@@ -1,7 +1,7 @@
 package com.titanium.feign.interceptor;
 
-import com.titanium.user.context.UserContext;
-import com.titanium.user.context.UserContextHolder;
+import com.titanium.common.user.UserContext;
+import com.titanium.common.user.UserContextHolder;
 import feign.Request;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

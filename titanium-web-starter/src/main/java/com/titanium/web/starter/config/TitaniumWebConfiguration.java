@@ -3,17 +3,24 @@ package com.titanium.web.starter.config;
 import com.titanium.json.config.TitaniumJsonConfiguration;
 import com.titanium.web.starter.advice.ApiLogHandler;
 import com.titanium.web.starter.advice.TitaniumMessageConverter;
+import com.titanium.web.starter.interceptor.UserHandlerInterceptor;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +33,37 @@ import java.util.List;
 @Import(TitaniumMessageConverter.class)
 public class TitaniumWebConfiguration implements WebMvcConfigurer {
     @Resource
+    private ApplicationContext applicationContext;
+    @Resource
     private TitaniumWebProperties titaniumWebProperties;
     @Resource
     private TitaniumMessageConverter titaniumMessageConverter;
 
     @Bean
+    @ConditionalOnProperty(name = "titanium.web.api-logging", havingValue = "true", matchIfMissing = false)
     public ApiLogHandler apiLogHandler() {
+        log.info("Titanium-Web-Starter add log handler");
         return new ApiLogHandler(titaniumWebProperties);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("Titanium-Web-Starter add log handler");
-        registry.addInterceptor(apiLogHandler());
+        if (titaniumWebProperties.getWebInterceptor().isEnable()) {
+            registry.addInterceptor(createInterceptor(titaniumWebProperties.getWebInterceptor().getInterceptor()))
+                    .addPathPatterns(titaniumWebProperties.getWebInterceptor().getIncludePatterns())
+                    .excludePathPatterns(titaniumWebProperties.getWebInterceptor().getExcludePatterns())
+                    .order(titaniumWebProperties.getWebInterceptor().getOrder());
+            log.info("Titanium-Web-Starter add web interceptor");
+        }
+        for (TitaniumWebProperties.InterceptorProperties interceptor : titaniumWebProperties.getAdditionalInterceptors()) {
+            if (interceptor.isEnable()) {
+                registry.addInterceptor(createInterceptor(interceptor.getInterceptor()))
+                        .addPathPatterns(interceptor.getIncludePatterns())
+                        .excludePathPatterns(interceptor.getExcludePatterns())
+                        .order(interceptor.getOrder());
+                log.info("Titanium-Web-Starter add {}", interceptor.getInterceptor().getName());
+            }
+        }
     }
 
     @Override
@@ -49,5 +74,10 @@ public class TitaniumWebConfiguration implements WebMvcConfigurer {
         newConverters.addAll(converters);
         converters.clear();
         converters.addAll(newConverters);
+    }
+
+    private HandlerInterceptor createInterceptor(Class<? extends HandlerInterceptor> interceptor) {
+        return applicationContext.getAutowireCapableBeanFactory()
+                .createBean(interceptor);
     }
 }

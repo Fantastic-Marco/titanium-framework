@@ -4,6 +4,7 @@ import com.titanium.web.starter.protocol.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -28,7 +29,10 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         if (body instanceof Response<?>) {
             // 如果Controller方法已经返回了ResponseVO类型，则无需再次包装
             return body;
-        } else {
+        } else if(body instanceof ProblemDetail){
+            // 如果Controller方法已经返回了ProblemDetail类型，则无需再次包装
+            return body;
+        }else {
             // 封装响应体
             Response<Object> objectResponse = Response.ok(body);
 

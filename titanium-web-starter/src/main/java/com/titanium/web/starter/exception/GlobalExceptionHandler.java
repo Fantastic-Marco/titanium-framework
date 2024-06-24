@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = NoAlarmException.class)
     public final ResponseEntity<Object> handleNoAlarmException(NoAlarmException e, WebRequest request) {
         log.error("no alarm exception: {}", e.getMessage());
-
+        log.error(e.getMessage(),e);
         Response response = Response.error(ResponseCodeEnum.ERROR.getCode(), e.getMessage());
 
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR; // 根据实际情况选择合适的HTTP状态码
@@ -41,6 +41,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = AlarmException.class)
     public final ResponseEntity<Object> handleNoAlarmException(AlarmException e, WebRequest request) {
         log.error("alarm exception: {}", e.getMessage());
+        log.error(e.getMessage(),e);
         //TODO 报警处理,发送邮件,短信等
 
         Response response = Response.error(ResponseCodeEnum.ERROR.getCode(), e.getMessage());
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public final ResponseEntity<Object> handleNoAlarmException(RuntimeException e, WebRequest request) {
         log.error("runtime exception: {}", e.getMessage());
-
+        log.error(e.getMessage(),e);
         Response response = Response.error(ResponseCodeEnum.ERROR.getCode(), e.getMessage());
 
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR; // 根据实际情况选择合适的HTTP状态码

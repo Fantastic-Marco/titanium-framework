@@ -8,6 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,7 +19,7 @@ import java.util.Collections;
 
 
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice
 public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverter implements InitializingBean {
 
     public TitaniumMessageConverter(ObjectMapper objectMapper) {
@@ -30,7 +31,7 @@ public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverte
 
     @Override
     protected boolean canWrite(MediaType mediaType) {
-        return ObjectUtil.isNotNull(mediaType) && mediaType.isCompatibleWith(MediaType.APPLICATION_JSON);
+        return true;
     }
 
     @Override
@@ -41,7 +42,10 @@ public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverte
         if (object instanceof Response) {
             // 已经是统一响应对象，直接调用父类方法序列化
             super.writeInternal(object, type, outputMessage);
-        } else {
+        }  else if(object instanceof ProblemDetail){
+            // 如果Controller方法已经返回了ProblemDetail类型，则无需再次包装
+            super.writeInternal(object, type, outputMessage);
+        }else {
             // 非统一响应对象，包装后再序列化
             Response<Object> wrappedResponse = Response.ok(object);
             super.writeInternal(wrappedResponse, type, outputMessage);

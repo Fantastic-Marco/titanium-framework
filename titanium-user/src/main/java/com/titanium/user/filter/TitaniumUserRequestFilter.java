@@ -1,8 +1,8 @@
 package com.titanium.user.filter;
 
 import cn.hutool.json.JSONUtil;
-import com.titanium.user.context.UserContext;
-import com.titanium.user.context.UserContextHolder;
+import com.titanium.common.user.UserContext;
+import com.titanium.common.user.UserContextHolder;
 import com.titanium.util.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
