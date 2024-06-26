@@ -3,17 +3,19 @@ package com.titanium.data.mybatis.plus.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.titanium.data.mybatis.plus.encrypt.Encrypted;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.JdbcType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseEntity{
+public class BaseEntity implements Encrypted, Serializable {
     /**
      * 创建人Id
      */
