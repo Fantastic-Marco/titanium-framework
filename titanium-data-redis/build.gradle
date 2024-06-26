@@ -1,0 +1,19 @@
+dependencies {
+    api project(":titanium-common")
+    //spring-boot
+    compileOnly "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+
+    //redisson
+    api "org.redisson:redisson-spring-boot-starter:${redissonVersion}"
+    api "io.netty:netty-all:${nettyVersion}"
+    //lettuce 连接池
+    api "io.lettuce:lettuce-core:${lettuceVersion}"
+
+    //ibatis for cache
+    compileOnly "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}"
+
+
+}
+

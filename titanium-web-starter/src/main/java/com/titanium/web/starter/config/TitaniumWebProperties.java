@@ -21,6 +21,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ConfigurationProperties(prefix = "titanium.web")
 public class TitaniumWebProperties implements InitializingBean {
     @Resource
@@ -29,11 +30,13 @@ public class TitaniumWebProperties implements InitializingBean {
     /**
      * 是否开启日志
      */
+    @Builder.Default
     private boolean enableApiLogging = false;
 
     /**
      * web拦截器配置
      */
+    @Builder.Default
     private InterceptorProperties webInterceptor = InterceptorProperties.builder()
             .enable(true)
             .interceptor(UserHandlerInterceptor.class)
@@ -43,6 +46,7 @@ public class TitaniumWebProperties implements InitializingBean {
     /**
      * 额外拦截器配置
      */
+    @Builder.Default
     private List<InterceptorProperties> additionalInterceptors = new ArrayList<>();
 
     /**

@@ -4,8 +4,8 @@ dependencies {
 
     api "com.baomidou:mybatis-plus:${mybatisPlusVersion}"
     //需要升级到3.0.3，因为fluent-mybatis 1.9.20 和 spring boot 3.2.5存在兼容问题
-    api 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    implementation 'p6spy:p6spy:3.9.1'
+    api "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}"
+    implementation "p6spy:p6spy:${p6spyVersion}"
 
     compileOnly "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"

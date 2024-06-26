@@ -19,12 +19,18 @@ allprojects {
         ext {
             //框架
             springBootVersion = '3.2.5'
+            springVersion = '6.1.8'
 
             //持久化
             fluentMybatisVersion = '1.9.2'
             mysqlConnectorVersion = '8.0.28'
             hikariCpVersion = '5.1.0'
             mybatisPlusVersion = '3.5.7'
+            mybatisSpringVersion = '3.0.3'
+            //redis
+            springDataRedisVersion = '3.2.5'
+            redissonVersion = '3.32.0'
+            lettuceVersion = '6.3.2.RELEASE'
 
             //公共
             lombokVersion = '1.18.30'
@@ -35,6 +41,9 @@ allprojects {
 
             //其他
             aptVersion = '0.21'
+            //mybatis 日志打印
+            p6spyVersion = '3.9.1'
+            nettyVersion = '4.1.109.Final'
         }
     }
 

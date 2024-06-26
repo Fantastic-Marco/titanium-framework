@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 用于标记跳过认证
  */
-@Target(value = {ElementType.METHOD})
+@Target(value = {ElementType.METHOD,ElementType.TYPE})
 @Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
 @Documented
 public @interface SkipAuth {

@@ -29,6 +29,10 @@ public class UserHandlerInterceptor implements HandlerInterceptor {
                 if (skipAuth != null) {
                     return true;
                 }
+                //看控制器是否需要跳过权限校验
+                if(method.getBeanType().isAnnotationPresent(SkipAuth.class)){
+                    return true;
+                }
             }
             // 校验token
             String authorization = request.getHeader("Authorization");

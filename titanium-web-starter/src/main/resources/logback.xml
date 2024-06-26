@@ -6,7 +6,7 @@
     <appender name="LOGBOOK-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!-- 格式化输出样式，可以根据需求调整 -->
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
