@@ -19,7 +19,7 @@ public abstract class TitaniumRepository<M extends TitaniumMapper<T>, T> extends
      * 这个方法是直接拼接批量插入语句，而Mybatis-Plus的saveBatch方法是通过循环单条插入
      * 注意：这个方法不支持字段默认值，如果对字段默认值有要求，请使用saveBatch方法
      */
-    int insertBatchSomeColumn(Collection<T> entityList) {
+    public int insertBatchSomeColumn(Collection<T> entityList) {
         return this.baseMapper.insertBatchSomeColumn(entityList);
     }
 

@@ -43,6 +43,7 @@ allprojects {
             aptVersion = '0.21'
             //mybatis 日志打印
             p6spyVersion = '3.9.1'
+            p6spySpringBootStarterVersion = '1.9.1'
             nettyVersion = '4.1.109.Final'
         }
     }

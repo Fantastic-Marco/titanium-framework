@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * 默认加密器
  * 使用AES算法加密为16进制字符串
  */
-@Component
 public class DefaultEncryptor implements IEncryptor {
     private EncryptProperties encryptProperties;
 

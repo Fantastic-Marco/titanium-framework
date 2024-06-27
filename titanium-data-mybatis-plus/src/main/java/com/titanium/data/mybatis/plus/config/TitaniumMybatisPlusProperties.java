@@ -11,7 +11,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "titanium.data.mybatis-plus")
 public class TitaniumMybatisPlusProperties {
+    /**
+     * 是否开启sql日志
+     * 使用p6spy实现
+     * 具有性能损耗，不建议生产环境使用
+     */
+    private boolean sqlLogEnabled = false;
 
+    /**
+     * 防止全表删除/更新
+     */
+    private boolean blockAttackEnabled = true;
+
+    /**
+     * 加密配置
+     */
     private EncryptProperties encrypt;
 }
 
