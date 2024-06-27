@@ -8,7 +8,7 @@
 
 - <a href="#auto-fill">字段填充器</a>
 - <a href="#logic-delete">逻辑删除支持</a>
-- 租户功能配置化集成
+- <a href="#tenant">租户功能配置化集成</a>
 - <a href="#encrypt"> 数据加密持久化 </a>
 - <a href="#optimistic-locker">乐观锁</a>
 - <a href="#batch-insert">自定义批量插入</a>
@@ -61,6 +61,45 @@ mybatis-plus:
       logic-delete-field: deleted # 全局逻辑删除字段名
       logic-delete-value: 1 # 逻辑已删除值
       logic-not-delete-value: 0 # 逻辑未删除值
+```
+
+### <p id="tenant">租户功能配置化集成</p>
+
+租户功能，可以自动过滤掉租户相关的数据。  
+当前的租户拦截器已经配合`titanium-web-starter` 组件，可以自动注入租户信息。  
+如果业务服务没有集成`titanium-web-starter` 组件，那么需要手动注入租户信息。  
+**使用方式**
+
+1. 配置租户拦截器，在`application.yml`中添加以下配置
+
+```yaml
+titanium:
+  data:
+    mybatis-plus:
+      tenant:
+        enabled: true # 是否开启租户功能，默认关闭
+        tables: # 需要过滤租户信息的表，支持多表
+          - table1
+          - table2
+        column: tenant_id # 租户字段名，默认tenant_id 
+```
+
+2. 自定义路径拦截器,配置默认的拦截器类 `TenantHandlerInterceptor`
+
+```java
+
+@Bean
+TitaniumWebCustomizer webCustomizer() {
+    return customizer -> {
+        customizer.setWebInterceptor(TitaniumWebProperties.tenantInterceptor.builder()
+                .enable(true)
+                .interceptor(TenantHandlerInterceptor.class)
+                .includePatterns(List.of("/**"))
+                .excludePatterns(List.of("/test/**"))
+                .order(Integer.MAX_VALUE)
+                .build());
+    };
+}
 ```
 
 ### <p id="encrypt"> 数据加密持久化</p>
@@ -121,7 +160,9 @@ public class User extends NamedBaseEntity {
 
 ### <p id = "optimistic-locker">乐观锁</p>
 
-本组件已经默认开启乐观锁功能，不需要额外配置  
+本组件已经默认开启乐观锁功能  
+默认关闭，需要手动开启
+
 **注意事项**
 
 - 支持的数据类型包括：int, Integer, long, Long, Date, Timestamp, LocalDateTime。
@@ -129,7 +170,17 @@ public class User extends NamedBaseEntity {
 - newVersion 会自动回写到实体对象中。
 - 仅支持 updateById(id) 和 update(entity, wrapper) 方法。在 update(entity, wrapper) 方法中，wrapper 不能复用。
 
-在Entity类中添加`@Version`注解，表示该字段为乐观锁版本号
+1. 开启乐观锁功能，需要配置以下信息
+
+```yaml
+# 乐观锁配置
+titanium:
+  data:
+    mybatis-plus:
+      optimistic-locker-enabled: true # 是否开启乐观锁功能，默认关闭
+```
+
+2. 在Entity类中添加`@Version`注解，表示该字段为乐观锁版本号
 
 ```java
 import com.baomidou.mybatisplus.annotation.Version;
@@ -191,7 +242,7 @@ userRepository.insertBatchSomeColumn(userList);
 titanium:
   data:
     mybatis-plus:
-      block-attack: true
+      block-attack-enabled: true
 ```
 
 ### <p id="log-print">SQL打印与分析</p>

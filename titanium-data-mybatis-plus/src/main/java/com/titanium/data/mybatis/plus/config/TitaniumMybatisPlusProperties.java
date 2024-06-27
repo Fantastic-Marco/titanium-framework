@@ -19,6 +19,11 @@ public class TitaniumMybatisPlusProperties {
     private boolean sqlLogEnabled = false;
 
     /**
+     * 乐观锁开关
+     */
+    private boolean optimisticLockerEnabled = false;
+
+    /**
      * 防止全表删除/更新
      */
     private boolean blockAttackEnabled = true;
@@ -27,5 +32,11 @@ public class TitaniumMybatisPlusProperties {
      * 加密配置
      */
     private EncryptProperties encrypt;
+
+    /**
+     * 租户配置
+     */
+    private TenantProperties tenant;
+
 }
 

@@ -1,9 +1,11 @@
 package com.titanium.data.mybatis.plus.config;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorProperties;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.p6spy.P6SpyConfiguration;
@@ -17,6 +19,7 @@ import com.titanium.data.mybatis.plus.encrypt.interceptor.EncryptionResultInterc
 import com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties;
 import com.titanium.data.mybatis.plus.log.TitaniumSqlStdoutLogger;
 import com.titanium.data.mybatis.plus.repository.AdvancedSqlInjector;
+import com.titanium.data.mybatis.plus.tenant.TenantInnerInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -139,9 +142,18 @@ public class TitaniumMybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        //乐观锁插件
+        if (properties.isOptimisticLockerEnabled()) {
+            interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        }
+        //防止全表更新插件
         if (properties.isBlockAttackEnabled()) {
             interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        }
+        //租户拦截插件
+        if (ObjectUtil.isNotNull(properties.getTenant()) && properties.getTenant().isEnabled()) {
+            TenantLineInnerInterceptor tenantInterceptor = new TenantLineInnerInterceptor();
+            tenantInterceptor.setTenantLineHandler(new TenantInnerInterceptor(properties.getTenant()));
         }
         return interceptor;
     }

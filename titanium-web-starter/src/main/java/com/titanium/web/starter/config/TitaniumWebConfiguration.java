@@ -3,7 +3,6 @@ package com.titanium.web.starter.config;
 import com.titanium.json.config.TitaniumJsonConfiguration;
 import com.titanium.web.starter.advice.ApiLogHandler;
 import com.titanium.web.starter.advice.TitaniumMessageConverter;
-import com.titanium.web.starter.interceptor.UserHandlerInterceptor;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -16,11 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.MappedInterceptor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +44,7 @@ public class TitaniumWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //认证拦截器
         if (titaniumWebProperties.getWebInterceptor().isEnable()) {
             registry.addInterceptor(createInterceptor(titaniumWebProperties.getWebInterceptor().getInterceptor()))
                     .addPathPatterns(titaniumWebProperties.getWebInterceptor().getIncludePatterns())
@@ -55,7 +52,16 @@ public class TitaniumWebConfiguration implements WebMvcConfigurer {
                     .order(titaniumWebProperties.getWebInterceptor().getOrder());
             log.info("Titanium-Web-Starter add web interceptor");
         }
-        for (TitaniumWebProperties.InterceptorProperties interceptor : titaniumWebProperties.getAdditionalInterceptors()) {
+        //租户拦截器
+        if (titaniumWebProperties.getTenantInterceptor().isEnable()) {
+            registry.addInterceptor(createInterceptor(titaniumWebProperties.getTenantInterceptor().getInterceptor()))
+                    .addPathPatterns(titaniumWebProperties.getTenantInterceptor().getIncludePatterns())
+                    .excludePathPatterns(titaniumWebProperties.getTenantInterceptor().getExcludePatterns())
+                    .order(titaniumWebProperties.getTenantInterceptor().getOrder());
+            log.info("Titanium-Web-Starter add tenant interceptor");
+        }
+        //额外拦截器
+        for (InterceptorProperties interceptor : titaniumWebProperties.getAdditionalInterceptors()) {
             if (interceptor.isEnable()) {
                 registry.addInterceptor(createInterceptor(interceptor.getInterceptor()))
                         .addPathPatterns(interceptor.getIncludePatterns())
