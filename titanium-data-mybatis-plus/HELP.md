@@ -5,6 +5,7 @@
 * HikariCP: 5.1.0
 * IDEA 插件：EasyCode
 
+---
 当前组件致力于提供Mybatis-Plus集成功能，方便引用该组件的业务服务可以短平快地使用以下功能
 
 - <a href="#auto-fill">字段填充器</a>
@@ -21,6 +22,7 @@
 - <a href="#connection-pool">连接池默认配置</a>
 - <a href="#id-generator">自定义Id生成器</a>
 
+---
 ## 最佳实践
 
 ### <p id="auto-fill">字段填充器</p>
@@ -50,7 +52,7 @@ public class User extends NamedBaseEntity {
 
 2. 往 `UserContextHolder` 提供用户信息，如果你的业务服务集成了 `titanium-web-starter` 组件，那么可以自动注入  
    如果没有集成 `titanium-web-starter` 组件，那么需要手动注入，例如自己实现一个拦截器，在拦截器中注入用户信息
-
+---
 ### <p id="logic-delete">开启逻辑删除</p>
 
 建议配置到统一的配置文件中，不要在应用配置
@@ -63,7 +65,7 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值
       logic-not-delete-value: 0 # 逻辑未删除值
 ```
-
+---
 ### <p id="tenant">租户功能配置化集成</p>
 
 租户功能，可以自动过滤掉租户相关的数据。  
@@ -102,7 +104,7 @@ TitaniumWebCustomizer webCustomizer() {
     };
 }
 ```
-
+---
 ### <p id="encrypt"> 数据加密持久化</p>
 
 有时候，有些业务信息具有敏感性，需要加密存储到数据库中。  
@@ -158,7 +160,7 @@ public class User extends NamedBaseEntity {
     private String mobile;
 }
 ```
-
+---
 ### <p id = "optimistic-locker">乐观锁</p>
 
 本组件已经默认开启乐观锁功能  
@@ -192,7 +194,7 @@ public class YourEntity {
     // 其他字段...
 }
 ```
-
+---
 ### <p id = "batch-insert">自定义批量插入</p>
 
 本组件已经默认开启批量插入功能，不需要额外配置,按照下面的规范即可调用 insertBatchSomeColumn 方法使用批量插入  
@@ -233,7 +235,7 @@ public class UserRepository extends TitaniumRepository<UserMapper, User> {
 ```java
 userRepository.insertBatchSomeColumn(userList);
 ```
-
+---
 ### <p id ="block-attack"> 防止全表删除/更新</p>
 
 本组件提供了防止全表删除/更新的功能，可以防止误操作。  
@@ -245,7 +247,7 @@ titanium:
     mybatis-plus:
       block-attack-enabled: true
 ```
-
+---
 ### <p id="log-print">SQL打印与分析</p>
 
 本组件提供SQL打印与分析功能，可以方便的查看执行的SQL语句。  
@@ -259,18 +261,19 @@ titanium:
       sql-log-enabled: true
 ```
 
+---
 ### <p id="connection-pool">连接池默认配置</p>
 
 本组件默认配置了连接池，可以减少数据库连接的开销。  
 默认使用HikariDataSource连接池
-
+---
 ### <p id="id-generator">自定义Id生成器</p>
 
 内置了雪花算法Id生成器，如果需要自定义Id生成器Bean  
 业务系统使用自动生成或者手动生成Id格式保持一致  
 默认自动生成雪花算法Id  
 手动生成只需要在业务系统中注入`IdGenerator`接口的实现类即可
-
+---
 ### <p id="code-generator">代码生成器</p>
 代码生成并非改组件提供的功能，当前能为使用者提供的是代码生成器模板，可以基于该模板进行二次开发。  
 生成代码需要执行以下步骤
