@@ -3,6 +3,7 @@
 * Mybatis-Plus: 版本 3.5.7
 * p6spy-spring-boot-starter: 1.9.1
 * HikariCP: 5.1.0
+* IDEA 插件：EasyCode
 
 当前组件致力于提供Mybatis-Plus集成功能，方便引用该组件的业务服务可以短平快地使用以下功能
 
@@ -16,7 +17,7 @@
 - 分页支持
 - <a href="#block-attack">防止全表删除/更新</a>
 - <a href="#log-print">SQL打印与分析</a>
-- 代码生成器
+- <a href="#code-generator">代码生成器</a>
 - <a href="#connection-pool">连接池默认配置</a>
 - <a href="#id-generator">自定义Id生成器</a>
 
@@ -272,4 +273,18 @@ titanium:
 
 ### <p id="code-generator">代码生成器</p>
 代码生成并非改组件提供的功能，当前能为使用者提供的是代码生成器模板，可以基于该模板进行二次开发。  
-file:titanium-data-mybatis-plus/src/main/resources/templates/generator.java  
+生成代码需要执行以下步骤
+1. 安装EasyCode插件
+2. 通过DataBase连接，选择数据库,选择表，点击生成代码  
+![选择表格](img/table-select.png)
+![选择生成策略](img/code-generator.png)
+3. 配置生成模板，选择代码生成器模板
+
+**模板**  
+- [entity.vm](doc/entity.vm)
+- [dao.vm](doc/dao.vm)
+- [mapper.vm](doc/mapper.vm)
+- [repository.vm](doc/repository.vm)
+- [service.vm](doc/service.vm)
+- [service-impl.vm](doc/service-impl.vm)
+- [controller.vm](doc/controller.vm)
