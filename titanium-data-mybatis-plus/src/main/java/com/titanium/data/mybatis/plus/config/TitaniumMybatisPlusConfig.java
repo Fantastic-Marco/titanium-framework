@@ -158,9 +158,4 @@ public class TitaniumMybatisPlusConfig {
         return interceptor;
     }
 
-    public static void main(String[] args) {
-        System.out.println(P6SpyDriver.class.getName());
-    }
-
-
 }

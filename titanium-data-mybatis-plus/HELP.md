@@ -270,3 +270,6 @@ titanium:
 默认自动生成雪花算法Id  
 手动生成只需要在业务系统中注入`IdGenerator`接口的实现类即可
 
+### <p id="code-generator">代码生成器</p>
+代码生成并非改组件提供的功能，当前能为使用者提供的是代码生成器模板，可以基于该模板进行二次开发。  
+file:titanium-data-mybatis-plus/src/main/resources/templates/generator.java  

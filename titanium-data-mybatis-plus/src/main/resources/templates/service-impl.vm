@@ -1,0 +1,25 @@
+##导入宏定义
+$!{define.vm}
+
+##设置表后缀（宏定义）
+#setTableSuffix("ServiceImpl")
+
+##保存文件（宏定义）
+#save("/service/impl", "ServiceImpl.java")
+
+##包路径（宏定义）
+#setPackageSuffix("service.impl")
+
+import $!{tableInfo.savePackageName}.repository.$!{tableInfo.name}Repository;
+import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
+import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
+import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+
+##表注释（宏定义）
+#tableComment("表服务实现类")
+@AllArgsConstructor
+@Service("$!tool.firstLowerCase($tableInfo.name)Service")
+public class $!{tableName} implements $!{tableInfo.name}Service {
+private final $!{tableInfo.name}Repository $tool.firstLowerCase($!{tableInfo.name})Repository;
+}

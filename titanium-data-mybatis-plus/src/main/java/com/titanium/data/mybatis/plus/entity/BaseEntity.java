@@ -2,6 +2,7 @@ package com.titanium.data.mybatis.plus.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.titanium.data.mybatis.plus.encrypt.Encrypted;
 import lombok.AllArgsConstructor;

@@ -12,6 +12,13 @@ dependencies {
     api project(":titanium-json")
     api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    api "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+
+//    // JUnit Jupiter API（包含测试注解等）
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2' // 使用最新版本
+//    // JUnit Jupiter Engine（用于执行JUnit Jupiter的测试）
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
     // 其他共享依赖
     api "org.projectlombok:lombok:${lombokVersion}" // Lombok 库，同时用于编译和运行时
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

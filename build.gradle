@@ -35,6 +35,7 @@ allprojects {
             //公共
             lombokVersion = '1.18.30'
             hutoolVersion = '5.8.20'
+            hibernateValidatorVersion = '8.0.1.Final'
 
             //序列化
             jacksonVersion = '2.16.0'
@@ -56,6 +57,7 @@ allprojects {
         // 其他共享依赖
         api "org.projectlombok:lombok:${lombokVersion}" // Lombok 库，同时用于编译和运行时
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     }
 }
 
@@ -74,6 +76,9 @@ subprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven {
+            url 'file://' + System.getProperty('user.home') + '/.m2/repository'
+        }
     }
 
     // 打包sourcesJar任务
@@ -136,6 +141,7 @@ subprojects {
     dependencies {
         api "org.projectlombok:lombok:${lombokVersion}" // Lombok 库，同时用于编译和运行时
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         api "cn.hutool:hutool-all:${hutoolVersion}"
     }
 }

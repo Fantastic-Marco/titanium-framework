@@ -47,4 +47,11 @@ public class DefaultEncryptor implements IEncryptor {
         // 默认使用AES
         return SecureUtil.aes(key.getBytes()).decryptStr(cipherText);
     }
+
+    public static void main(String[] args) {
+        String key = "b8dd183a8f6d38b1766f9a4e76c76e73";
+        String plainText = "marco520";
+        String encryptedStr = SecureUtil.aes(key.getBytes()).encryptHex(plainText);
+        System.out.println(encryptedStr);
+    }
 }

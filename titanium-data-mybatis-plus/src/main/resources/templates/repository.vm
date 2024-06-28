@@ -1,0 +1,43 @@
+##导入宏定义
+$!{define.vm}
+
+##保存文件（宏定义）
+#save("/repository", "Repository.java")
+
+##包路径（宏定义）
+#setPackageSuffix("repository")
+
+##自动导入包（全局变量）
+$!autoImport
+import com.titanium.data.mybatis.plus.repository.TitaniumRepository;
+import $!{tableInfo.savePackageName}.entity.$!tableInfo.name;
+import $!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Slf4j
+@Repository
+public class $!{tableInfo.name}Repository extends TitaniumRepository<$!{tableInfo.name}Mapper, $!{tableInfo.name}> {
+/**
+* 批量新增数据（MyBatis原生foreach方法）
+*
+* @param entities List<$!{tableInfo.name}> 实例对象列表
+* @return 影响行数
+*/
+public int insertBatch(@Param("entities") List<$!{tableInfo.name}> entities){
+return this.baseMapper.insertBatch(entities);
+}
+
+/**
+* 批量新增或按主键更新数据（MyBatis原生foreach方法）
+*
+* @param entities List<$!{tableInfo.name}> 实例对象列表
+* @return 影响行数
+* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+*/
+public int insertOrUpdateBatch(@Param("entities") List<$!{tableInfo.name}> entities){
+return this.baseMapper.insertOrUpdateBatch(entities);
+}
+}
