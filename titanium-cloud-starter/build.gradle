@@ -1,0 +1,3 @@
+dependencies {
+    api project(":titanium-web-starter")
+}

@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-/**
- * @author zhongym
- */
 public class TitaniumNumberFormatSerializer extends StdSerializer<Number> {
     private final DecimalFormat format;
 

@@ -34,7 +34,7 @@ public class TitaniumDateTimeModule extends SimpleModule {
         this.addSerializer(LocalTime.class, new TitaniumLocalTimeSerializer());
         this.addDeserializer(LocalTime.class, new TitaniumLocalTimeDeserializer());
 
-        this.addSerializer(LocalDateTime.class, new TitaniumLocalDateTimeSerializer());
+        this.addSerializer(LocalDateTime.class, new TitaniumLocalDateTimeSerializer(TitaniumLocalDateTimeSerializer.DEFAULT_FORMATTER));
         this.addDeserializer(LocalDateTime.class, new TitaniumLocalDateTimeDeserializer());
     }
 }

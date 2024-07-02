@@ -1,6 +1,7 @@
 rootProject.name = 'titanium-framework'
 
 include('titanium-web-starter')
+include('titanium-cloud-starter')
 include('titanium-dependencies')
 include('titanium-json')
 include('titanium-util')

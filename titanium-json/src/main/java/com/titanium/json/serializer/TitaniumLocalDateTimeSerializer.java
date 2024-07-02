@@ -22,10 +22,9 @@ import static com.titanium.common.constant.DatePatternConstants.NORM_DATETIME_PA
  * 修改输出标准的时间戳
  * Serializer for Java 8 temporal {@link LocalDateTimeSerializer}.
  *
- * @author zhongym
  */
 public class TitaniumLocalDateTimeSerializer extends LocalDateTimeSerializer {
-    private static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ofPattern(NORM_DATETIME_PATTERN);
+    public static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ofPattern(NORM_DATETIME_PATTERN);
 
     public TitaniumLocalDateTimeSerializer() {
         this(null);
