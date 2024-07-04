@@ -1,7 +1,7 @@
 FROM mysql:8.0.30
 
 #增加nacos 文件到容器 /docker-entrypoint-initdb.d 文件夹内
-COPY init/mysql/nacos-V2.3.2.sql /docker-entrypoint-initdb.d/nacos-mysql.sql
+ADD https://raw.githubusercontent.com/Fantastic-Marco/titanium-framework/main/titanium-docker-compose/init/msyql/nacos-V2.3.2.sql /docker-entrypoint-initdb.d/nacos-mysql.sql
 #修改文件权限为mysql账号可读
 RUN chown -R mysql:mysql /docker-entrypoint-initdb.d/nacos-mysql.sql
 #暴露3306端口

@@ -1,10 +1,5 @@
-plugins {
-    id 'java'
-    id 'java-library'
-}
-
 dependencies {
-    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+    api "org.springframework.cloud:spring-cloud-starter-openfeign:$openfeignVersion"
 
     api project(':titanium-common')
     api project(':titanium-user')

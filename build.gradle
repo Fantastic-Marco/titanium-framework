@@ -15,11 +15,19 @@ allprojects {
     group = 'com.titanium'
     version = '0.0.1-SNAPSHOT'
 
+    // 设置最低支持的 JDK 版本
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.targetCompatibility = JavaVersion.VERSION_17
+
     buildscript {
         ext {
             //框架
             springBootVersion = '3.2.5'
             springVersion = '6.1.8'
+
+            //cloud
+            nacosVersion = '2023.0.1.0'
+            openfeignVersion = '4.1.2'
 
             //持久化
             fluentMybatisVersion = '1.9.2'
@@ -50,7 +58,11 @@ allprojects {
     }
 
     repositories {
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven {
+            url 'file://' + System.getProperty('user.home') + '/.m2/repository'
+        }
     }
 
     dependencies {
@@ -62,24 +74,6 @@ allprojects {
 }
 
 subprojects {
-
-
-    group = 'com.titanium'
-    version = '0.0.1-SNAPSHOT'
-
-    // 设置最低支持的 JDK 版本
-    java.sourceCompatibility = JavaVersion.VERSION_17
-    java.targetCompatibility = JavaVersion.VERSION_17
-
-
-
-    repositories {
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public/' }
-        maven {
-            url 'file://' + System.getProperty('user.home') + '/.m2/repository'
-        }
-    }
 
     // 打包sourcesJar任务
     task sourcesJar(type: Jar, dependsOn: classes) {

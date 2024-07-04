@@ -1,0 +1,78 @@
+version: "3.8"
+name: titanium-cloud-alibaba
+
+services:
+
+  #Nacos
+  nacos:
+    image: nacos/nacos-server:${NACOS_VERSION}
+    container_name: nacos-standalone
+    env_file:
+      - ../env/nacos-standalone.env
+    volumes:
+      - ../data/standalone-logs/:/home/nacos/logs
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos/v1/console/health"]  # 使用curl检查Nacos的健康状态
+      interval: 10s  # 每30秒检查一次
+      timeout: 20s  # 检查的超时时间
+      retries: 3  # 如果连续3次检查失败，则认为容器不健康
+      start_period: 30s  # 容器启动后，等待40秒再进行健康检查（可选）
+
+  #seata
+  seata-server:
+    container_name: seata
+    image: seataio/seata-server:${SEATA_VERSION}
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    environment:
+      - STORE_MODE=db
+      # 以SEATA_IP作为host注册seata server
+      - SEATA_IP=127.0.0.1
+      - SEATA_PORT=8091
+    volumes:
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
+      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
+      # 假设我们通过docker cp命令把资源文件拷贝到相对路径`./seata-server/resources`中
+      # 如有问题，请阅读上面的[注意事项]以及[使用自定义配置文件]
+      - "../init/seata/seata-application.yml:/seata-server/resources/application.yml"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+
+  #Mysal
+  mysql:
+    container_name: mysql-8.0.30
+    image: titanium/mysql:8.0.30
+    build:
+      context: .
+      dockerfile: ../images/mysql/mysql-8.Dockerfile
+    env_file:
+      - ../env/mysql.env
+    volumes:
+      - ../data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  #Redis
+  redis:
+    container_name: redis-7.4
+    image: redis:${REDIS_VERSION}
+    ports:
+      - "6379:6379"
+    volumes:
+      - ~/software/redis/data:/data
+      - ../init/redis/redis-standalone.conf:/etc/redis/redis.conf

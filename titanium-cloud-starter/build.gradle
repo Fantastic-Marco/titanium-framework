@@ -1,3 +1,5 @@
 dependencies {
     api project(":titanium-web-starter")
+    api "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${nacosVersion}"
+    api "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${nacosVersion}"
 }
