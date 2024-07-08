@@ -28,6 +28,7 @@ allprojects {
             //cloud
             nacosVersion = '2023.0.1.0'
             openfeignVersion = '4.1.2'
+            loadBalancerVersion = '4.1.2'
 
             //持久化
             fluentMybatisVersion = '1.9.2'

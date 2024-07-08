@@ -5,6 +5,8 @@ services:
 
   #Nacos localhost:8848/nacos/ nacos/marco520
   nacos:
+    networks:
+      - default
     image: nacos/nacos-server:${NACOS_VERSION}
     container_name: nacos-standalone
     env_file:
@@ -26,6 +28,8 @@ services:
 
   #seata http://localhost:7091/ marco/marco520
   seata-server:
+    networks:
+      - default
     container_name: seata
     image: seataio/seata-server:${SEATA_VERSION}
     ports:
@@ -47,6 +51,8 @@ services:
 
   #Mysal 3306 root/marco520
   mysql:
+    networks:
+      - default
     container_name: mysql-8.0.30
     image: titanium/mysql:8.0.30
     build:
@@ -67,6 +73,8 @@ services:
 
   #Redis
   redis:
+    networks:
+      - default
     container_name: redis-7.4
     image: redis:${REDIS_VERSION}
     ports:
@@ -74,3 +82,17 @@ services:
     volumes:
       - ~/software/redis/data:/data
       - ../init/redis/redis-standalone.conf:/etc/redis/redis.conf
+
+networks:
+  host:
+    driver: host
+  bridge:
+    driver: bridge
+  overlay:
+    driver: overlay
+  macvlan:
+    driver: macvlan
+  ipvlan:
+    driver: ipvlan
+  default:
+    driver: bridge

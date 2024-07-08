@@ -1,8 +1,7 @@
 package com.titanium.web.starter.advice;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.titanium.web.starter.protocol.Response;
+import com.titanium.common.protocol.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

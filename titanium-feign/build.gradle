@@ -1,5 +1,6 @@
 dependencies {
     api "org.springframework.cloud:spring-cloud-starter-openfeign:$openfeignVersion"
+    api "org.springframework.cloud:spring-cloud-starter-loadbalancer:${loadBalancerVersion}"
 
     api project(':titanium-common')
     api project(':titanium-user')

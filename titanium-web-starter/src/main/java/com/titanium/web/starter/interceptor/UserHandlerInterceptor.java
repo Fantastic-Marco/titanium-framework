@@ -34,7 +34,7 @@ public class UserHandlerInterceptor implements HandlerInterceptor, Ordered {
                     return true;
                 }
                 //看控制器是否需要跳过权限校验
-                if(method.getBeanType().isAnnotationPresent(SkipAuth.class)){
+                if (method.getBeanType().isAnnotationPresent(SkipAuth.class)) {
                     return true;
                 }
             }
@@ -47,6 +47,7 @@ public class UserHandlerInterceptor implements HandlerInterceptor, Ordered {
             Jws<Claims> claimsJws = JwtUtil.decodeJwt(authorization.toString(), JwtUtil.SECRET_KEY);
             String subject = claimsJws.getPayload().getSubject();
             UserContext userContext = JSONUtil.toBean(subject, UserContext.class);
+            userContext.setAuthorization(authorization);
             UserContextHolder.set(userContext);
             return true;
         } catch (ExpiredJwtException e) {

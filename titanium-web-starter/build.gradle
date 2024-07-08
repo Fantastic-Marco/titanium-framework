@@ -1,14 +1,5 @@
-plugins {
-    id 'io.spring.dependency-management' version '1.1.4'
-    id 'maven-publish'
-    id 'java'
-    id 'java-library'
-}
-
-group = 'com.titanium'
-version = '0.0.1-SNAPSHOT'
-
 dependencies {
+    api project(":titanium-common")
     api project(":titanium-json")
     api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter:${springBootVersion}"

@@ -1,4 +1,4 @@
-package com.titanium.web.starter.protocol;
+package com.titanium.common.protocol;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
