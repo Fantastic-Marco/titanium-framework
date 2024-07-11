@@ -15,20 +15,27 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 
+/**
+ * 用于解决统一响应时，接口声明为String类型
+ * 返回类型为String时，会调用{@link org.springframework.http.converter.HttpMessageConverter}
+ *
+ */
 
 @Slf4j
-//@ControllerAdvice
 public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverter implements InitializingBean {
 
     public TitaniumMessageConverter(ObjectMapper objectMapper) {
         super();
         setObjectMapper(objectMapper);
-        // 设置支持的媒体类型，例如 application/json
-        super.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
     }
 
     @Override
-    protected boolean canWrite(MediaType mediaType) {
+    public boolean canRead(Class<?> clazz, MediaType mediaType) {
+        return false;
+    }
+
+    @Override
+    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
         return true;
     }
 
@@ -52,6 +59,6 @@ public class TitaniumMessageConverter extends MappingJackson2HttpMessageConverte
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("added global response handler");
+        log.info("added global titanium message converter");
     }
 }

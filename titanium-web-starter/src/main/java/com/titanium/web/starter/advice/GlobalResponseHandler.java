@@ -1,6 +1,8 @@
 package com.titanium.web.starter.advice;
 
 import com.titanium.common.protocol.Response;
+import com.titanium.json.Json;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -8,11 +10,11 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -20,22 +22,28 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         return true;
     }
 
+    @SneakyThrows
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
+        // 设置响应内容类型和编码
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         if (body instanceof Response<?>) {
             // 如果Controller方法已经返回了ResponseVO类型，则无需再次包装
             return body;
-        } else if(body instanceof ProblemDetail){
+        }else if (body instanceof String) {
+            // 如果Controller方法已经返回了ProblemDetail类型，则无需再次包装
+            // 封装响应体
+            Response<Object> objectResponse = Response.ok(body);
+            return Json.serialize(objectResponse);
+        }
+        else if(body instanceof ProblemDetail){
             // 如果Controller方法已经返回了ProblemDetail类型，则无需再次包装
             return body;
         }else {
             // 封装响应体
             Response<Object> objectResponse = Response.ok(body);
-
-            // 设置响应内容类型和编码
-            response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
 
             try {
                 // 将封装后的响应体转换为JSON字符串写入响应体
@@ -43,6 +51,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
             } catch (Exception e) {
                 throw new RuntimeException("Failed to serialize response", e);
             }
+
         }
     }
 }
