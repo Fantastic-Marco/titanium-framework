@@ -1,0 +1,10 @@
+[
+  {
+    "name": "titanium.user.enabled",
+    "type": "java.lang.Boolean",
+    "description": "turn on/off user authorization.",
+    "sourceType": "com.titanium.user.config.TitaniumUserProperties",
+    "defaultValue": true
+  }
+]
+
