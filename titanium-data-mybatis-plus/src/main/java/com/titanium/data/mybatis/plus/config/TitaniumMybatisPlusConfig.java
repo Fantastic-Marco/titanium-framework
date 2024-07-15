@@ -8,9 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorProperties;
-import com.github.gavlyukovskiy.boot.jdbc.decorator.p6spy.P6SpyConfiguration;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.p6spy.P6SpyProperties;
-import com.p6spy.engine.spy.P6SpyDriver;
 import com.titanium.data.mybatis.plus.encrypt.encrytor.DefaultEncryptor;
 import com.titanium.data.mybatis.plus.encrypt.encrytor.IEncryptor;
 import com.titanium.data.mybatis.plus.encrypt.interceptor.EncryptQueryInterceptor;
@@ -18,9 +16,9 @@ import com.titanium.data.mybatis.plus.encrypt.interceptor.EncryptUpdateInnerInte
 import com.titanium.data.mybatis.plus.encrypt.interceptor.EncryptionResultInterceptor;
 import com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties;
 import com.titanium.data.mybatis.plus.log.TitaniumSqlStdoutLogger;
-import com.titanium.data.mybatis.plus.repository.AdvancedSqlInjector;
 import com.titanium.data.mybatis.plus.tenant.TenantInnerInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
+import io.seata.rm.datasource.DataSourceProxy;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -28,17 +26,16 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Primary;
+import org.springframework.util.ClassUtils;
 
 import javax.sql.DataSource;
 import java.util.Objects;
@@ -46,7 +43,12 @@ import java.util.Optional;
 
 @Slf4j
 @Configuration
-@EnableConfigurationProperties({TitaniumMybatisPlusProperties.class, DataSourceProperties.class, DataSourceDecoratorProperties.class})
+@EnableConfigurationProperties({
+        TitaniumMybatisPlusProperties.class,
+        DataSourceProperties.class,
+        DataSourceDecoratorProperties.class,
+        MybatisProperties.class
+})
 public class TitaniumMybatisPlusConfig {
     @Resource
     private TitaniumMybatisPlusProperties properties;
@@ -82,8 +84,15 @@ public class TitaniumMybatisPlusConfig {
         dataSource.setDriverClassName(datasourceProperties.getDriverClassName());
         dataSource.setUsername(datasourceProperties.getUsername());
         dataSource.setPassword(datasourceProperties.getPassword());
+        //TODO 增加undo_log表初始化
+        //seata 数据库代理
+        if (ClassUtils.isPresent("io.seata.rm.datasource.DataSourceProxy", this.getClass().getClassLoader())) {
+            log.info("seata datasource proxy enabled");
+            return new DataSourceProxy(dataSource);
+        }
         return dataSource;
     }
+
 
     /**
      * 默认 SqlsessionFactory

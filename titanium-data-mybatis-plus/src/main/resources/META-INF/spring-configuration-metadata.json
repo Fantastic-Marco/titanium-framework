@@ -1,0 +1,82 @@
+{
+  "groups": [
+    {
+      "name": "titanium.data.mybatis-plus",
+      "type": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "titanium.data.mybatis-plus.sql-log-enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off sql log",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "titanium.data.mybatis-plus.optimistic-locker-enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off optimistic lock",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "titanium.data.mybatis-plus.block-attack-enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off sql attack,forbidden update/delete all data of table",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "titanium.data.mybatis-plus.encrypt",
+      "type": "com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties",
+      "description": "encrypt some filed,and decrypt filed when query",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.encrypt.enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off encrypt",
+      "sourceType": "com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "titanium.data.mybatis-plus.encrypt.key",
+      "type": "java.lang.String",
+      "description": "encrypt key",
+      "sourceType": "com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.encrypt.algorithm",
+      "type": "java.lang.String",
+      "description": "encrypt algorithm",
+      "sourceType": "com.titanium.data.mybatis.plus.encrypt.properties.EncryptProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.tenant",
+      "type": "com.titanium.data.mybatis.plus.config.TenantProperties",
+      "description": "auto full fill tenant field when query",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TitaniumMybatisPlusProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.tenant.enabled",
+      "type": "java.lang.Boolean",
+      "description": "turn on/off tenant",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TenantProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.tenant.tables",
+      "type": "java.util.List<String>",
+      "description": "table need tenant full fill tenant id",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TenantProperties"
+    },
+    {
+      "name": "titanium.data.mybatis-plus.tenant.column",
+      "type": "java.lang.String",
+      "description": "tenant id column name",
+      "sourceType": "com.titanium.data.mybatis.plus.config.TenantProperties",
+      "defaultValue": "tenant_id"
+    }
+  ]
+}

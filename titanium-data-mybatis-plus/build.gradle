@@ -10,6 +10,7 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compileOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+    compileOnly "com.alibaba.cloud:spring-cloud-starter-alibaba-seata:${seataVersion}"
 
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     api "com.zaxxer:HikariCP:${hikariCpVersion}"
