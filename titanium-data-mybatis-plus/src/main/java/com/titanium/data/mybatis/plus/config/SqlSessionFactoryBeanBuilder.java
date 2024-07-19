@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 自定义SqlSessionFactoryBean构建器
+ * @see com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration#sqlSessionFactory
+ */
 @Slf4j
 public class SqlSessionFactoryBeanBuilder {
     public static MybatisSqlSessionFactoryBean getSqlSessionFactoryBean(

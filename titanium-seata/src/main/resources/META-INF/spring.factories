@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration = com.titanium.seata.
+org.springframework.boot.autoconfigure.EnableAutoConfiguration = com.titanium.seata.config.TitaniumSeataConfiguration

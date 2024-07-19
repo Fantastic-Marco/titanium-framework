@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "titanium.seata",
+      "type": "com.titanium.seata.config.TitaniumSeataProperties",
+      "sourceType": "com.titanium.seata.config.TitaniumSeataProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "titanium.seata.holder-type",
+      "type": "java.lang.String",
+      "description": "the type of resource holder,support memory,mysql,redis",
+      "sourceType": "com.titanium.seata.config.TitaniumSeataProperties",
+      "defaultValue": "memory"
+    }
+  ]
+}

@@ -5,12 +5,21 @@
 AT模式是Seata的默认事务模式，在Seata中，AT模式是指**自动提交**。  
 AT模式是以两段提交的方式实现的，与XA不同的是，AT会自动提交事务，不需要手动提交，而XA需要手动提交事务。  
 性能比XA模式高，缺点是数据并非强一致性，而是最终一致性。  
+适用于对数据一致性要求不高，业务简单，没有明显的资源锁定情况且读多写少的场景。  
 ![AT Framework](img/at-framework.png)
+
+### 优点
+- 性能相对较高，性能优于XA模式
+- 无代码侵入，无需修改业务代码
+- 无需关注回滚日志，Seata自动维护
 
 #### 限制
 - 仅支持本地事务
-- 数据表必须定义主键
+- 数据表必须定义主键  
+  没有主键，流程走不下去，会报Get table meta failed, please check whether the table xxx exists.
 - 隔离性：读未提交
+- 需要业务库额外增加undo_log表，用于存储回滚日志
+- 回滚场景多的时候，性能会下降
 
 ### 快速开始
 
@@ -96,3 +105,23 @@ seata:
 ```
 
 4. 代码中添加注解
+TM：使用 @GlobalTransactional 开启全局事务即可
+```java
+    /**
+ * 更新用户信息
+ * @param req
+ * @return
+ */
+@Override
+@GlobalTransactional(timeoutMills = 3000, name = "user-update")
+@Transactional(rollbackFor = Exception.class)
+public boolean updateById(UserUpdateReq req) {
+   Long userId = req.getUserId();
+   User user = userRepository.getById(userId);
+   boolean updated = userRepository.updateById(UserAssembler.toEntity(user, req));
+   Response<Boolean> ssoUpdateResponse = userClient.update(UserAssembler.toInnerReq(user,req));
+   Assert.isTrue(ssoUpdateResponse.isSuccess(), "user-sso-service 更新用户失败");
+//        throw new RuntimeException("测试异常");
+   return updated;
+}
+```
