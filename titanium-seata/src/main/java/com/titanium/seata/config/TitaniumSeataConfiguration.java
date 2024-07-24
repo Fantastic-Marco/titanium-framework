@@ -5,8 +5,10 @@ import com.titanium.seata.holder.MemoryTccResourceHolder;
 import com.titanium.seata.holder.MysqlTccResourceHolder;
 import com.titanium.seata.holder.RedisTccResourceHolder;
 import com.titanium.seata.holder.TccResourceHolder;
+import com.titanium.seata.tcc.TitaniumScannerChecker;
 import io.seata.rm.datasource.DataSourceProxy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -61,6 +63,12 @@ public class TitaniumSeataConfiguration implements EnvironmentAware {
         return new MemoryTccResourceHolder();
     }
 
+    @Bean
+    @ConditionalOnBean(TccResourceHolder.class)
+    TitaniumScannerChecker titaniumScannerChecker() {
+        log.info("titanium seata scanner checker enabled");
+        return new TitaniumScannerChecker();
+    }
 
     @Override
     public void setEnvironment(Environment environment) {

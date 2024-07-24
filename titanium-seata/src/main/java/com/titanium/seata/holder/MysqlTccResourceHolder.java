@@ -83,7 +83,7 @@ public class MysqlTccResourceHolder extends MySQLUndoLogManager implements TccRe
 
     /**
      * 将资源标记为已回滚
-     * 如果需要判断当前是否为空回滚，可以调用{@link #hasUndoLog(String, Long)} 判断
+     * 如果需要判断当前是否为空回滚，可以调用{@linkplain #hasUndoLog(String, long)} 判断
      * @param xid
      * @return
      */

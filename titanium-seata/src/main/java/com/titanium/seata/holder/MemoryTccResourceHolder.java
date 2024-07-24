@@ -111,7 +111,7 @@ public class MemoryTccResourceHolder implements TccResourceHolder {
      */
     private synchronized boolean updateResource(String xid, Long branchId, TccStatusEnum statusEnum, TccStatusEnum oldStatusEnum) {
         String key = xid + "-" + branchId;
-        if (ObjectUtil.equals(resourceMap.get(key), oldStatusEnum.getCode())) {
+        if (ObjectUtil.equals(getResourceStatus(xid, branchId), oldStatusEnum.getCode())) {
             resourceMap.put(key, statusEnum.getCode());
             return true;
         }

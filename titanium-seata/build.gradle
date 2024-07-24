@@ -1,5 +1,4 @@
 dependencies {
-    api project(":titanium-common")
     api project(":titanium-json")
 
     compileOnly "com.baomidou:mybatis-plus:${mybatisPlusVersion}"
