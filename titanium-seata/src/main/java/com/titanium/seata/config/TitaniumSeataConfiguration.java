@@ -63,6 +63,10 @@ public class TitaniumSeataConfiguration implements EnvironmentAware {
         return new MemoryTccResourceHolder();
     }
 
+    /**
+     * 自定义 tcc bean 检查器
+     * @return
+     */
     @Bean
     @ConditionalOnBean(TccResourceHolder.class)
     TitaniumScannerChecker titaniumScannerChecker() {

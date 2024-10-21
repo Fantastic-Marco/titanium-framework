@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class UserContextHolder {
-    private final ThreadLocal<UserContext> userContextHolder = new ThreadLocal<>();
+    private final ThreadLocal<UserContext> userContextHolder = new InheritableThreadLocal<>();
 
     /**
      * 设置用户信息上下文

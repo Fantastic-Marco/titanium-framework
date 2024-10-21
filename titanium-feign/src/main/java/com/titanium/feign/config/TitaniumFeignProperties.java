@@ -14,4 +14,14 @@ public class TitaniumFeignProperties {
      * 启用feign
      */
     private boolean enable = true;
+
+    /**
+     * 是否打印日志
+     */
+    private boolean log = false;
+
+    /**
+     * 打印Curl
+     */
+    private boolean logCurl = false;
 }

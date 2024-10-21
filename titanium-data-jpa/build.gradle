@@ -1,0 +1,24 @@
+// Querydsl 代码生成器
+//apply plugin: 'java-apt'
+//plugins {
+//    id 'java-apt'
+//}
+
+
+dependencies {
+    api project(":titanium-user")
+    api "org.springframework.boot:spring-boot-starter-data-jpa:${jpaVersion}"
+    api "com.querydsl:querydsl-jpa:${queryDslJpaVersion}"
+    api "com.querydsl:querydsl-core:${queryDslJpaVersion}"
+    api "com.querydsl:querydsl-apt:${queryDslJpaVersion}"
+//    api "jakarta.persistence"
+    compileOnly "com.alibaba.cloud:spring-cloud-starter-alibaba-seata:${seataVersion}"
+}
+
+
+//apt {
+//    arguments {
+//        entityAnnotatedWith '@javax.persistence.Entity'
+//        forceRegenerate true
+//    }
+//}

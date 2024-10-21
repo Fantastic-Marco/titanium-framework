@@ -32,11 +32,15 @@ allprojects {
             seataVersion = '2023.0.1.0'
 
             //持久化
-            fluentMybatisVersion = '1.9.2'
             mysqlConnectorVersion = '8.0.28'
             hikariCpVersion = '5.1.0'
+            //mybatis
+            fluentMybatisVersion = '1.9.2'
             mybatisPlusVersion = '3.5.7'
             mybatisSpringVersion = '3.0.3'
+            //jpa
+            jpaVersion = '3.3.2'
+            queryDslJpaVersion = '5.1.0'
             //redis
             springDataRedisVersion = '3.2.5'
             redissonVersion = '3.32.0'
@@ -139,5 +143,8 @@ subprojects {
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         api "cn.hutool:hutool-all:${hutoolVersion}"
+
+//        compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     }
 }

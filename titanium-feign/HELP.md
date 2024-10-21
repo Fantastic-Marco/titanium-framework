@@ -1,16 +1,22 @@
-# Getting Started
+# Titanium-Feign
 
-### Reference Documentation
+## 简介
 
-For further reference, please consider the following sections:
+Titanium-Feign 是基于 OpenFeign 实现的微服务调用客户端。
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.3.0/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.3.0/gradle-plugin/reference/html/#build-image)
+## 功能列表
 
-### Additional Links
+- 统一日志
+- 用户信息透传
 
-These additional references should also help you:
+## 用户信息透传
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+用户信息透传，需要使用 `TitaniumFeignInterceptor` 拦截器。  
+引入当前模块默认是开启的，需要关闭，请在配置文件中添加如下配置
+
+```yaml
+titanium:
+  feign:
+    enable: false
+```
 
