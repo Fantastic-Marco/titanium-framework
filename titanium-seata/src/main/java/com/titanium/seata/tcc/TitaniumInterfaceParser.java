@@ -32,7 +32,7 @@ public class TitaniumInterfaceParser implements InterfaceParser {
                         DefaultResourceRegisterParser.get().registerResource(target, objectName);
                     }
                     if (remotingDesc.isReference()) {
-                        return new TitaniumTccActionInterceptorHandler(remotingDesc, methodsToProxy, TitaniumTccResourcerHolder.get(target));
+                        return new TitaniumTccActionInterceptorHandler(remotingDesc, methodsToProxy, TitaniumTccResourceHolder.get(target));
                     }
                 }
             }

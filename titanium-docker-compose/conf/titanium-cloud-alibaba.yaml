@@ -37,9 +37,9 @@ services:
       - "8091:8091"
     env_file:
       - ../env/seata.env
+    environment:
+      - TZ=Asia/Shanghai #设置时区
     volumes:
-      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/localtime"        #设置系统时区
-      - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"  #设置时区
       # 假设我们通过docker cp命令把资源文件拷贝到相对路径`./seata-server/resources`中
       # 如有问题，请阅读上面的[注意事项]以及[使用自定义配置文件]
       - "../init/seata/seata-application.yml:/seata-server/resources/application.yml"

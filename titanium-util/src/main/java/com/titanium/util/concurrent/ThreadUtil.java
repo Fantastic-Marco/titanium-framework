@@ -26,6 +26,7 @@ public class ThreadUtil {
                 runnable.run();
             } catch (Exception e) {
 //                log.error(e.getMessage(), e);
+                throw  e;
             } finally {
                 UserContextHolder.clear();
                 TenantContextHolder.clear();
@@ -40,7 +41,8 @@ public class ThreadUtil {
                 return supplier.get();
             } catch (Exception e) {
 //                log.error(e.getMessage(), e);
-                return null;
+                throw  e;
+//                return null;
             } finally {
                 UserContextHolder.clear();
                 TenantContextHolder.clear();
@@ -59,7 +61,7 @@ public class ThreadUtil {
                         () -> testCallError(i)
                 )).collect(Collectors.toList());
         List<Integer> result = futures.stream().map(CompletableFuture::join).collect(Collectors.toList());
-        futures.stream().allMatch(f -> f.isDone() || f.isCompletedExceptionally());
+//        futures.stream().allMatch(f -> f.isDone() || f.isCompletedExceptionally());
         for (int i = 0; i < result.size(); i++) {
             Integer resultItem = result.get(i);
             System.out.println("result: " + resultItem);
@@ -89,7 +91,7 @@ public class ThreadUtil {
 
     private static Integer testCallError(Integer i) {
         int random = new Random().nextInt(5);
-//        if (i % 2 == 0) throw new RuntimeException("error" + i);
+        if (i % 2 == 0) throw new RuntimeException("error" + i);
         try {
             TimeUnit.SECONDS.sleep(random);
         } catch (InterruptedException e) {

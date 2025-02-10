@@ -1,13 +1,11 @@
 package com.titanium.seata.tcc;
 
 import com.titanium.seata.action.AbstractTccAction;
-import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 import io.seata.spring.annotation.ScannerChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -40,7 +38,7 @@ public class TitaniumScannerChecker implements ScannerChecker {
             boolean tccAction = check(bean);
             if (tccAction) {
                 log.info("{} is tcc action,approve by titanium tcc scanner checker", beanName);
-                TitaniumTccResourcerHolder.put(bean);
+                TitaniumTccResourceHolder.put(bean);
             }
             return tccAction;
         } else {
@@ -52,14 +50,16 @@ public class TitaniumScannerChecker implements ScannerChecker {
 
     public static boolean isTccAction(Object bean) {
         if (bean instanceof AbstractTccAction) {
-            boolean isTccAnnotationAction = false;
-            for (Method method : bean.getClass().getMethods()) {
-                if (method.isAnnotationPresent(TwoPhaseBusinessAction.class)) {
-                    isTccAnnotationAction = true;
-                    break;
-                }
-            }
-            return !isTccAnnotationAction;
+            //只要是继承自AbstractTccAction的类，都认为是TccAction
+//            boolean isTccAnnotationAction = false;
+//            for (Method method : bean.getClass().getMethods()) {
+//                if (method.isAnnotationPresent(TwoPhaseBusinessAction.class)) {
+//                    isTccAnnotationAction = true;
+//                    break;
+//                }
+//            }
+//            return !isTccAnnotationAction;
+            return true;
         }
         return false;
     }

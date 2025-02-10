@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.titanium.common.user.UserContext;
 import com.titanium.common.user.UserContextHolder;
 import com.titanium.json.Json;
+import com.titanium.seata.constants.TccConstants;
 import com.titanium.seata.context.BusinessParamContext;
 import com.titanium.seata.enums.TccStatusEnum;
 import com.titanium.seata.holder.TccResourceHolder;
@@ -41,6 +42,7 @@ public abstract class AbstractTccAction {
      * 准备阶段
      * 自动设置用户信息，如果存在的话
      * 需要处理资源悬挂
+     * 该方法命名需要和 @see{com.titanium.seata.constants.TccConstants.PREPARE_METHOD} 一致
      * @see TccActionInterceptorHandler
      * #doInvoke(InvocationWrapper invocation)
      */
@@ -58,7 +60,7 @@ public abstract class AbstractTccAction {
             if (prepared) {
                 //添加用户信息
                 if (UserContextHolder.get() != null) {
-                    context.addActionContext(USER_CONTEXT_KEY, Json.serialize(UserContextHolder.get()));
+                    context.addActionContext(TccConstants.USER_CONTEXT_KEY, Json.serialize(UserContextHolder.get()));
                 }
                 // 锁定资源
                 return holder.prepare(xid, branchId);
@@ -76,10 +78,10 @@ public abstract class AbstractTccAction {
      * @return
      */
     public UserContext getUserContext(BusinessActionContext context) {
-        if (context.getActionContext(USER_CONTEXT_KEY) == null) {
+        if (context.getActionContext(TccConstants.USER_CONTEXT_KEY) == null) {
             return null;
         }
-        String userContextStr = (String) context.getActionContext(USER_CONTEXT_KEY);
+        String userContextStr = (String) context.getActionContext(TccConstants.USER_CONTEXT_KEY);
         // 获取用户信息
         return Json.deserialize(userContextStr, UserContext.class);
     }
@@ -112,6 +114,7 @@ public abstract class AbstractTccAction {
 
     /**
      * 回滚阶段
+     * 空回滚处理
      * @param context
      * @return
      */
@@ -119,6 +122,7 @@ public abstract class AbstractTccAction {
         String xid = context.getXid();
         Long branchId = context.getBranchId();
         Integer status = holder.getStatus(xid, branchId);
+        // 解决空回滚
         if (ObjectUtil.equals(status, TccStatusEnum.INIT.getCode())) {
             log.info("xid {} branchId {} has not prepare, status {},exec empty rollback", xid, branchId, status);
             return true;

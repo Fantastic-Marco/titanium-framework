@@ -2,6 +2,7 @@ package com.titanium.seata.tcc;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.extra.spring.SpringUtil;
+import com.titanium.seata.constants.TccConstants;
 import com.titanium.seata.context.BusinessParamContext;
 import io.seata.rm.tcc.TCCResource;
 import io.seata.rm.tcc.api.BusinessActionContext;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-public class TitaniumTccResourcerHolder {
+public class TitaniumTccResourceHolder {
     private static Map<Object, TCCResource> caches = new ConcurrentHashMap<>();
 
     public static void put(Object key) {
@@ -35,11 +36,11 @@ public class TitaniumTccResourcerHolder {
         tccResource.setActionName(actionName);
         tccResource.setAppName(applicationName);
         tccResource.setTargetBean(target);
-        tccResource.setPrepareMethod(target.getClass().getMethod("prepare", BusinessActionContext.class, BusinessParamContext.class));
-        tccResource.setCommitMethodName("commit");
-        tccResource.setCommitMethod(target.getClass().getMethod("commit", BusinessActionContext.class));
-        tccResource.setRollbackMethodName("rollback");
-        tccResource.setRollbackMethod(target.getClass().getMethod("rollback", BusinessActionContext.class));
+        tccResource.setPrepareMethod(target.getClass().getMethod(TccConstants.PREPARE_METHOD, BusinessActionContext.class, BusinessParamContext.class));
+        tccResource.setCommitMethodName(TccConstants.COMMIT_METHOD);
+        tccResource.setCommitMethod(target.getClass().getMethod(TccConstants.COMMIT_METHOD, BusinessActionContext.class));
+        tccResource.setRollbackMethodName(TccConstants.ROLLBACK_METHOD);
+        tccResource.setRollbackMethod(target.getClass().getMethod(TccConstants.ROLLBACK_METHOD, BusinessActionContext.class));
         // set argsClasses
         Class[] argClasses = {BusinessActionContext.class};
         tccResource.setCommitArgsClasses(argClasses);
