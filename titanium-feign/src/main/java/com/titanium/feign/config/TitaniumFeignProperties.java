@@ -1,5 +1,6 @@
 package com.titanium.feign.config;
 
+import com.titanium.feign.constants.TitaniumFeignContants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "titanium.feign")
+@ConfigurationProperties(prefix = TitaniumFeignContants.PROP_PREFIX)
 public class TitaniumFeignProperties {
     /**
      * 启用feign

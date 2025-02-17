@@ -1,0 +1,9 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.titanium.json.config.TitaniumJsonConfiguration,\
+com.titanium.web.starter.config.TitaniumWebConfiguration
+
+org.springframework.boot.SpringApplicationRunListener=\
+com.titanium.web.starter.listener.ApplicationRunnerListener
+
+org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler=\
+com.titanium.web.starter.exception.GlobalExceptionHandler

@@ -3,6 +3,7 @@ package com.titanium.web.starter.config;
 import com.titanium.json.config.TitaniumJsonConfiguration;
 import com.titanium.web.starter.advice.ApiLogHandler;
 import com.titanium.web.starter.advice.TitaniumMessageConverter;
+import com.titanium.web.starter.listener.ApplicationRunnerListener;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

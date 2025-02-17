@@ -1,6 +1,9 @@
 dependencies {
     api "org.springframework.cloud:spring-cloud-starter-openfeign:$openfeignVersion"
     api "org.springframework.cloud:spring-cloud-starter-loadbalancer:${loadBalancerVersion}"
+    //AOP
+    api "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    api "org.aspectj:aspectjweaver:1.9.22.1"
 
     api project(':titanium-common')
     api project(':titanium-user')
