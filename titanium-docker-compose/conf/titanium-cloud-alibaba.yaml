@@ -83,6 +83,68 @@ services:
       - ~/software/redis/data:/data
       - ../init/redis/redis-standalone.conf:/etc/redis/redis.conf
 
+  # Elasticsearch (used by SkyWalking for storage)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - TZ=Asia/Shanghai #设置时区
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    env_file:
+      - ../env/elasticsearch.env
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ../data/elasticsearch:/usr/share/elasticsearch/data
+#      - ../init/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  #skywalking
+  skywalking-oap:
+    networks:
+      - default
+    container_name: skywalking-oap
+    image: apache/skywalking-oap-server:${SKYWALKING_VERSION}
+    environment:
+      - TZ=Asia/Shanghai #设置时区
+    env_file:
+      - ../env/skywalking-opa.env
+    ports:
+      - "11800:11800" # gRPC for agents
+      - "12800:12800" # RESTful backend for UI
+    volumes:
+      - ~/software/skywalking-oap/data:/skywalking/data
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:12800/healthcheck || exit 1" ]
+      interval: 10s # 每 10 秒检查一次
+      timeout: 5s   # 健康检查超时时间为 5 秒
+      retries: 3    # 如果连续 3 次失败，则认为容器不健康
+      start_period: 30s # 容器启动后等待 30 秒再开始健康检查
+
+  #https://hub.docker.com/r/apache/skywalking-ui
+  skywalking-ui:
+    networks:
+      - default
+    container_name: skywalking-ui
+    image: apache/skywalking-ui:${SKYWALKING_VERSION}
+    environment:
+      - TZ=Asia/Shanghai #设置时区
+    env_file:
+      - ../env/skywalking-ui.env
+    ports:
+      - "8090:8080"
+    depends_on:
+      - skywalking-oap
+
+
+
 networks:
   host:
     driver: host

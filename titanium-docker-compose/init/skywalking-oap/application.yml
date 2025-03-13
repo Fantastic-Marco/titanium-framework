@@ -1,0 +1,29 @@
+sw:
+  agent:
+    name: "skywalking-oap-server" # OAP Server 的服务名称
+
+storage:
+  adapter: elasticsearch7 # 使用 Elasticsearch 7.x 作为存储适配器
+
+elasticsearch7:
+  name: Elasticsearch7StorageProvider
+  clusterNodes: ${ELASTICSEARCH_IP}:9200 # Elasticsearch 的地址，多个地址用逗号分隔
+  indexShardsNumber: 3 # 索引的分片数量
+  indexReplicasNumber: 1 # 索引的副本数量
+  user: "" # 如果 Elasticsearch 启用了认证，填写用户名
+  password: "" # 如果 Elasticsearch 启用了认证，填写密码
+  protocol: http # 协议类型（http 或 https）
+  sslVerification: true # 是否启用 SSL 验证（仅在使用 HTTPS 时有效）
+  bulkActions: 1000 # 批量操作大小
+  flushInterval: 1000 # 刷新间隔（毫秒）
+  concurrentRequests: 4 # 并发请求数量
+  maxRetries: 3 # 最大重试次数
+  threadPoolSize: 8 # 线程池大小
+  healthCheckInterval: 10000 # 健康检查间隔（毫秒）
+
+metrics:
+  exporter:
+    - "prometheus"
+
+logging:
+  level: INFO # 日志级别（DEBUG, INFO, WARN, ERROR）
