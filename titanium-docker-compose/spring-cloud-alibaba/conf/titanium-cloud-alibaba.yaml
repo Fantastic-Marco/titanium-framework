@@ -157,6 +157,20 @@ services:
     depends_on:
       - skywalking-oap
 
+  apache-pulsar:
+    networks:
+      - default
+    container_name: apache-pulsar
+    image: apachepulsar/pulsar:${PULSAR_VERSION}
+    env_file:
+      - ../env/pulsar.env
+    ports:
+      - "6650:6650"
+      - "8091:8080"
+    volumes:
+      - ../data/apache-pulsar/data:/pulsar/data
+      - ../init/apache-pulsar:/pulsar/conf
+    command: bin/pulsar standalone
 
 
 networks:

@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * TCC资源缓存
+ */
 @Slf4j
 public class TitaniumTccResourceHolder {
     private static Map<Object, TCCResource> caches = new ConcurrentHashMap<>();
