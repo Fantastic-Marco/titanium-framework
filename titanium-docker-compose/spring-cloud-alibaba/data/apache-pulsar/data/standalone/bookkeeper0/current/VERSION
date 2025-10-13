@@ -1,0 +1,4 @@
+5
+bookieHost: "bk0test"
+journalDir: "data/standalone/bookkeeper0"
+ledgerDirs: "1\tdata/standalone/bookkeeper0"

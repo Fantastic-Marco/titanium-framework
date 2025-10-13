@@ -1,0 +1,76 @@
+services:
+  # 第一套主从复制环境
+  mysql-master-1:
+    image: mysql:8.0.30
+    container_name: mysql-master-1
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./master-1/data:/var/lib/mysql
+      - ./master-1/conf/my.cnf:/etc/mysql/my.cnf:ro
+      - ./master-1/init:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: repl_user
+      MYSQL_PASSWORD: repl_password
+    command: --server-id=1 --log-bin=mysql-bin --binlog-format=row
+    networks:
+      - mysql-net-1
+
+  mysql-slave-1:
+    image: mysql:8.0.30
+    container_name: mysql-slave-1
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./slave-1/data:/var/lib/mysql
+      - ./slave-1/conf/my.cnf:/etc/mysql/my.cnf:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    command: --server-id=2 --relay-log=relay-bin
+    networks:
+      - mysql-net-1
+    depends_on:
+      - mysql-master-1
+
+  # 第二套主从复制环境
+  mysql-master-2:
+    image: mysql:8.0.30
+    container_name: mysql-master-2
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./master-2/data:/var/lib/mysql
+      - ./master-2/conf/my.cnf:/etc/mysql/my.cnf:ro
+      - ./master-2/init:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: repl_user
+      MYSQL_PASSWORD: repl_password
+    command: --server-id=3 --log-bin=mysql-bin --binlog-format=row
+    networks:
+      - mysql-net-2
+
+  mysql-slave-2:
+    image: mysql:8.0.30
+    container_name: mysql-slave-2
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./slave-2/data:/var/lib/mysql
+      - ./slave-2/conf/my.cnf:/etc/mysql/my.cnf:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    command: --server-id=4 --relay-log=relay-bin
+    networks:
+      - mysql-net-2
+    depends_on:
+      - mysql-master-2
+
+networks:
+  mysql-net-1:
+    driver: bridge
+  mysql-net-2:
+    driver: bridge
