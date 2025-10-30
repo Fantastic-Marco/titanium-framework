@@ -1,16 +1,31 @@
 rootProject.name = 'titanium-framework'
 
-include('titanium-web-starter')
-include('titanium-cloud-starter')
-include('titanium-dependencies')
-include('titanium-json')
-include('titanium-util')
-include('titanium-common')
-include('titanium-core')
-include('titanium-data-fluent-mybatis')
-include('titanium-data-mybatis-plus')
-include('titanium-data-redis')
-include('titanium-data-jpa')
-include('titanium-user')
-include('titanium-feign')
-include('titanium-seata')
+// Core modules
+include 'titanium-core'
+include 'titanium-common'
+include 'titanium-util'
+
+// Data modules
+include 'titanium-data-jpa'
+include 'titanium-data-mybatis-plus'
+include 'titanium-data-redis'
+include 'titanium-data-fluent-mybatis'
+
+// Web modules
+include 'titanium-web-starter'
+include 'titanium-feign'
+
+// Cloud modules
+include 'titanium-cloud-starter'
+include 'titanium-seata'
+include 'titanium-user'
+include 'titanium-json'
+
+// Log and tracing modules
+include 'titanium-log'
+include 'titanium-tracing'
+include 'titanium-tracing-zipkin'
+include 'titanium-tracing-skywalking'
+
+// Configuration modules
+include 'titanium-dependencies'

@@ -35,6 +35,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.ClassUtils;
 
 import javax.sql.DataSource;
@@ -49,6 +50,7 @@ import java.util.Optional;
         DataSourceDecoratorProperties.class,
         MybatisProperties.class
 })
+@Order(10)
 public class TitaniumMybatisPlusConfig {
     @Resource
     private TitaniumMybatisPlusProperties properties;
@@ -77,7 +79,7 @@ public class TitaniumMybatisPlusConfig {
      * @see com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorAutoConfiguration
      */
     @Bean
-    @ConditionalOnClass(DataSource.class)
+    @ConditionalOnMissingBean(DataSource.class)
     public DataSource dataSource(DataSourceProperties datasourceProperties) {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(datasourceProperties.getUrl());

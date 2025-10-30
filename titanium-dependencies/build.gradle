@@ -9,3 +9,7 @@ version = '0.0.1-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    api 'org.springframework.cloud:spring-cloud-dependencies:2022.0.4'
+}

@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project(':titanium-tracing')
+    
+    // Skywalking for distributed tracing
+    api 'org.apache.skywalking:apm-toolkit-trace:8.15.0'
+    
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+}

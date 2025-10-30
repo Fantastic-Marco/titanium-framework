@@ -172,6 +172,23 @@ services:
       - ../init/apache-pulsar:/pulsar/conf
     command: bin/pulsar standalone
 
+  # Zipkin - Distributed tracing system
+  zipkin:
+    networks:
+      - default
+    container_name: zipkin
+    image: openzipkin/zipkin:${ZIPKIN_VERSION:-latest}
+    environment:
+      - TZ=Asia/Shanghai #设置时区
+      - STORAGE_TYPE=mem # 使用内存存储，生产环境建议使用elasticsearch
+    ports:
+      - "9411:9411"
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "http://localhost:9411/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
 networks:
   host:
