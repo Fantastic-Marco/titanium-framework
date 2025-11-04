@@ -1,1 +1,2 @@
 com.titanium.tracing.config.TracingConfiguration
+com.titanium.tracing.config.SpiTraceIdExtractorConfiguration

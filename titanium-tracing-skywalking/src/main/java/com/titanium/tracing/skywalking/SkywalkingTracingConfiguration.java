@@ -1,8 +1,7 @@
 package com.titanium.tracing.skywalking;
 
-import com.titanium.tracing.config.TracingConfiguration;
+import com.titanium.tracing.extractor.TraceIdExtractor;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
-import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,7 +19,17 @@ public class SkywalkingTracingConfiguration {
      */
     @PostConstruct
     public void setupMDCIntegration() {
-        // Skywalking会自动将traceId放入MDC中，供日志系统使用
+        // 注册MDC处理器以确保traceId被正确放入MDC中
+    }
+    
+    /**
+     * 提供MDCSkywalkingTraceIdHandler Bean
+     * 
+     * @return MDCSkywalkingTraceIdHandler实例
+     */
+    @Bean
+    public MDCSkywalkingTraceIdHandler mdcSkywalkingTraceIdHandler() {
+        return new MDCSkywalkingTraceIdHandler();
     }
     
     /**
@@ -29,11 +38,11 @@ public class SkywalkingTracingConfiguration {
      * @return 当前TraceId，如果不存在则返回null
      */
     @Bean
-    public TracingConfiguration.TraceIdExtractor traceIdExtractor() {
+    public com.titanium.tracing.extractor.TraceIdExtractor skywalkingTraceIdExtractor() {
         return new TraceIdExtractor();
     }
     
-    public static class TraceIdExtractor implements TracingConfiguration.TraceIdExtractor {
+    public static class TraceIdExtractor implements com.titanium.tracing.extractor.TraceIdExtractor {
         @Override
         public String getCurrentTraceId() {
             try {

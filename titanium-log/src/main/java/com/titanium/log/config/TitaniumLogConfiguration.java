@@ -1,15 +1,20 @@
 package com.titanium.log.config;
 
+import com.titanium.tracing.config.SpiTraceIdExtractorConfiguration;
+import com.titanium.tracing.config.TracingConfiguration;
+import com.titanium.tracing.extractor.TraceIdExtractor;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.ObjectProvider;
-import com.titanium.tracing.config.TracingConfiguration;
 
 /**
  * 日志配置类，用于配置日志相关的功能
  */
 @Configuration
+@AutoConfigureAfter(SpiTraceIdExtractorConfiguration.class) // 确保在TracingConfiguration之后加载
 public class TitaniumLogConfiguration {
 
     /**
@@ -19,32 +24,17 @@ public class TitaniumLogConfiguration {
      * @return 当前TraceId，如果不存在则返回null
      */
     @Bean
-    public TraceIdExtractor traceIdExtractor(ObjectProvider<TracingConfiguration.TraceIdExtractor> tracingTraceIdExtractor) {
+    @ConditionalOnMissingBean(TraceIdExtractor.class)
+    public TraceIdExtractor traceIdExtractor(ObjectProvider<TraceIdExtractor> tracingTraceIdExtractor) {
         // 如果 tracing 模块存在且提供了 TraceIdExtractor，则使用它
-        TracingConfiguration.TraceIdExtractor extractor = tracingTraceIdExtractor.getIfAvailable();
+        TraceIdExtractor extractor = tracingTraceIdExtractor.getIfAvailable();
         if (extractor != null) {
-            return new TraceIdExtractorAdapter(extractor);
+            return extractor;
         }
         // 否则使用默认实现，从MDC中获取TraceId
         return new DefaultTraceIdExtractor();
     }
-    
-    /**
-     * 适配器类，用于适配 tracing 模块的 TraceIdExtractor
-     */
-    private static class TraceIdExtractorAdapter implements TraceIdExtractor {
-        private final TracingConfiguration.TraceIdExtractor extractor;
-        
-        public TraceIdExtractorAdapter(TracingConfiguration.TraceIdExtractor extractor) {
-            this.extractor = extractor;
-        }
-        
-        @Override
-        public String getCurrentTraceId() {
-            return extractor.getCurrentTraceId();
-        }
-    }
-    
+
     /**
      * 默认的TraceId提取器实现
      * 从MDC中获取TraceId（如果其他追踪系统直接放入MDC）
@@ -55,12 +45,5 @@ public class TitaniumLogConfiguration {
             // 从MDC中获取traceId，如果存在的话
             return MDC.get("traceId");
         }
-    }
-    
-    /**
-     * TraceId提取器接口
-     */
-    public interface TraceIdExtractor {
-        String getCurrentTraceId();
     }
 }

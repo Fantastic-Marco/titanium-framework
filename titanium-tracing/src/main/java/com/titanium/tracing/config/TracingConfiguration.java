@@ -1,5 +1,6 @@
 package com.titanium.tracing.config;
 
+import com.titanium.tracing.extractor.TraceIdExtractor;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -8,16 +9,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class TracingConfiguration {
-    
-    /**
-     * TraceId提取器接口
-     */
-    public interface TraceIdExtractor {
-        /**
-         * 获取当前TraceId
-         * 
-         * @return 当前TraceId，如果不存在则返回null
-         */
-        String getCurrentTraceId();
-    }
+
 }

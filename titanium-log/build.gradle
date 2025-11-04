@@ -7,6 +7,9 @@ dependencies {
     api 'org.slf4j:slf4j-api:2.0.9'
     api "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
     api "org.springframework:spring-context:${springVersion}"
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+    compileOnly "org.springframework:spring-web:${springVersion}"
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     
     // Optional dependency on tracing module
     compileOnly project(':titanium-tracing')

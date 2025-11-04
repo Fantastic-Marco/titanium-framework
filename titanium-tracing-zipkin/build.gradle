@@ -4,6 +4,8 @@ plugins {
 
 dependencies {
     api project(':titanium-tracing')
+    compileOnly "org.springframework:spring-web:${springVersion}"
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     
     // Zipkin and Sleuth for distributed tracing
     api 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.5'

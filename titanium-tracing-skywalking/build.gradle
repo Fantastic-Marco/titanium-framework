@@ -4,7 +4,10 @@ plugins {
 
 dependencies {
     api project(':titanium-tracing')
-    
+    compileOnly "org.springframework:spring-context:${springVersion}"
+    compileOnly "org.springframework:spring-web:${springVersion}"
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     // Skywalking for distributed tracing
     api 'org.apache.skywalking:apm-toolkit-trace:8.15.0'
     
